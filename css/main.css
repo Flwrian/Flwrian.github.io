@@ -158,6 +158,16 @@ p.lead {
 	line-height: 1.8;
 	color: #888888;
 }
+.img-projects:hover{
+	opacity: 0.6;
+	/* scale effect */
+	-webkit-transform: scale(1.1);
+	-moz-transform: scale(1.1);
+	-ms-transform: scale(1.1);
+	-o-transform: scale(1.1);
+	transform: scale(1.1);
+	transition: all 0.5s ease-in-out;
+}
 @media only screen and (max-width:768px) {
 	p.lead {
 		font-size: 1.7rem;
@@ -1496,6 +1506,12 @@ header .logo a {
 }
 #about .section-intro {
 	margin-bottom: 3rem;
+}
+
+#projects {
+	background: #FFFFFF;
+	padding-top: 12rem;
+	padding-bottom: 15rem;
 }
 
 .intro-info {
