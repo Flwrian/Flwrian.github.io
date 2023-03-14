@@ -314,6 +314,13 @@ function sendJSMail() {
 		// body: 'Name: ' + name + ' Email: ' + email + ' Message: ' + message,
 	};
 
+	// On vérifie les données du formulaire
+	if(params.name == "" || params.email == "" || params.message == "") {
+		document.getElementsByClassName("message-warning")[0].style.visibility = "visible";
+		document.getElementsByClassName("message-success")[0].style.visibility = "hidden";
+		return;
+	}
+
 	// let serviceID = "service_qentm0m";
 	// let templateID = "template_vywxgoi";
 
