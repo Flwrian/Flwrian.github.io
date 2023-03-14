@@ -319,15 +319,12 @@ function sendJSMail() {
 
 	let serviceID = "service_rkykry7";
 	let templateID = "template_s39qaop";
-	console.log(serviceID, templateID, params);
 	
 	emailjs.send(serviceID, templateID, params)
 		.then((res => {
-			console.log("success", res.status);
 			document.getElementsByClassName("message-success")[0].style.visibility = "visible";
 			document.getElementsByClassName("message-warning")[0].style.visibility = "hidden";
 		}), (err => {
-			console.log("failed", err);
 			document.getElementsByClassName("message-warning")[0].style.visibility = "visible";
 		document.getElementsByClassName("message-success")[0].style.visibility = "hidden";
 		}
