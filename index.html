@@ -363,7 +363,83 @@
 
 					</div> <!-- item-wrap -->
 				</div> <!-- end col-six -->
+				</div> <!-- end row -->
 
+			</section> <!-- end portfolio -->
+
+			<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init("19W_oMPJNkZHdnJm8");
+   })();
+</script>
+
+
+				<!-- Contact section -->
+				<section id="contact">
+					<div class="row section-intro">
+						<div class="col-twelve">
+				
+							<h5>Contact</h5>
+							<h1>Get In Touch.</h1>
+				
+							<p class="lead">Feel free to contact me for any inquiries or just to say hello!</p>
+				
+						</div>
+					</div>
+				
+					<div class="row contact-form">
+				
+						<div class="col-twelve">
+				
+							<!-- form -->
+							<form action="#" method="post" id="contactForm" name="contactForm">
+								<fieldset>
+				
+									<div class="form-field">
+										<input name="contactName" type="text" id="contactName" placeholder="Name" minlength="2"
+											required="">
+									</div>
+									<div class="form-field">
+										<input name="contactEmail" type="email" id="contactEmail" placeholder="Email" required="">
+									</div>
+									<div class="form-field">
+										<textarea name="contactMessage" id="contactMessage" placeholder="message" rows="10"
+											cols="50" required=""></textarea>
+									</div>
+									<div class="form-field">
+										<button class="submitform" onclick="sendJSMail()">Submit</button>
+										<div id="submit-loader">
+											<div class="text-loader">Sending...</div>
+											<div class="s-loader">
+												<div class="bounce1"></div>
+												<div class="bounce2"></div>
+												<div class="bounce3"></div>
+											</div>
+										</div>
+									</div>
+				
+								</fieldset>
+							</form> <!-- end form -->
+				
+							<!-- contact-warning -->
+							<div class="message-warning">
+								Something went wrong. Please try again.
+							</div>
+				
+							<!-- contact-success -->
+							<div class="message-success">
+								Your message was sent, thank you!<br>
+							</div>
+				
+						</div> <!-- end col-twelve -->
+				
+					</div> <!-- end row -->
+				
+				</section> <!-- end contact -->
+				
 
 
 

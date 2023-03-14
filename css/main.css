@@ -2613,4 +2613,24 @@ footer .copyright span:last-child::after {
 	background: #000000;
 }
 
+.message-warning {
+	visibility: hidden;
+
+	font-size: 1.4rem;
+	font-family: "poppins-regular", sans-serif;
+	text-align: center;
+
+	color: #FFFFFF;
+}
+
+.message-success {
+	visibility: hidden;
+
+	font-size: 1.4rem;
+	font-family: "poppins-regular", sans-serif;
+	text-align: center;
+
+	color: #FFFFFF;
+}
+
 /*# sourceMappingURL=main.css.map */

@@ -289,3 +289,25 @@
 	});		
 
 })(jQuery);
+
+function sendJSMail() {
+	var params = {
+		name: document.getElementById('contactName').value,
+		email: document.getElementById('contactEmail').value,
+		message: document.getElementById('contactMessage').value,
+		// subject: document.getElementById('contactSubject').value,
+		// body: 'Name: ' + name + ' Email: ' + email + ' Message: ' + message,
+	}
+	let serviceID = "service_qentm0m";
+	let templateID = "template_vywxgoi";
+	
+	emailjs.send(serviceID, templateID, params)
+		.then((res => {
+			console.log("success", res.status);
+			document.getElementsByClassName("message-success")[0].style.visibility = "visible";
+		}), (err => {
+			console.log("failed", err);
+			document.getElementsByClassName("message-warning")[0].style.visibility = "visible";
+		}
+	));
+}
