@@ -310,8 +310,12 @@ function sendJSMail() {
 		// body: 'Name: ' + name + ' Email: ' + email + ' Message: ' + message,
 	};
 
-	let serviceID = "service_qentm0m";
-	let templateID = "template_vywxgoi";
+	// let serviceID = "service_qentm0m";
+	// let templateID = "template_vywxgoi";
+
+	let serviceID = "service_zt4fvyn";
+	let templateID = "template_s39qaop";
+	console.log(serviceID, templateID, params);
 	
 	emailjs.send(serviceID, templateID, params)
 		.then((res => {
