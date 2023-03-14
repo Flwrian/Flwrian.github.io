@@ -290,16 +290,20 @@
 
 })(jQuery);
 
+let idx = 0;
+
 function sendJSMail() {
 
 	// On vérifie si l'utilsateur a déjà envoyé un mail
-	if(document.cookie.indexOf("emailSent=true") >= 0) {
+	if(document.cookie.indexOf("emailSent=true") >= 0 || idx > 0) {
 		document.getElementsByClassName("message-warning")[0].style.visibility = "visible";
+		document.getElementsByClassName("message-success")[0].style.visibility = "hidden";
 		return;
 	}
 
 	// Si l'utilisateur n'a pas encore envoyé de mail, on créer un cookie pour éviter qu'il en envoie plusieurs
 	document.cookie = "emailSent=true; max-age=3600";
+	idx++;
 	
 	// On récupère les données du formulaire
 	var params = {
@@ -313,7 +317,7 @@ function sendJSMail() {
 	// let serviceID = "service_qentm0m";
 	// let templateID = "template_vywxgoi";
 
-	let serviceID = "service_zt4fvyn";
+	let serviceID = "service_rkykry7";
 	let templateID = "template_s39qaop";
 	console.log(serviceID, templateID, params);
 	
@@ -321,9 +325,11 @@ function sendJSMail() {
 		.then((res => {
 			console.log("success", res.status);
 			document.getElementsByClassName("message-success")[0].style.visibility = "visible";
+			document.getElementsByClassName("message-warning")[0].style.visibility = "hidden";
 		}), (err => {
 			console.log("failed", err);
 			document.getElementsByClassName("message-warning")[0].style.visibility = "visible";
+		document.getElementsByClassName("message-success")[0].style.visibility = "hidden";
 		}
 	));
 }

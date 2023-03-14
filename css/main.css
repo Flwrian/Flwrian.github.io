@@ -2633,6 +2633,10 @@ footer .copyright span:last-child::after {
 	color: #FFFFFF;
 }
 
+.fa-discord {
+	scale: 1.3;
+}
+
 #about {
 	/* No blank at the end of the page */
 	padding-bottom: 0;
