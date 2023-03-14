@@ -291,13 +291,25 @@
 })(jQuery);
 
 function sendJSMail() {
+
+	// On vérifie si l'utilsateur a déjà envoyé un mail
+	if(document.cookie.indexOf("emailSent=true") >= 0) {
+		document.getElementsByClassName("message-warning")[0].style.visibility = "visible";
+		return;
+	}
+
+	// Si l'utilisateur n'a pas encore envoyé de mail, on créer un cookie pour éviter qu'il en envoie plusieurs
+	document.cookie = "emailSent=true; max-age=3600";
+	
+	// On récupère les données du formulaire
 	var params = {
 		name: document.getElementById('contactName').value,
 		email: document.getElementById('contactEmail').value,
 		message: document.getElementById('contactMessage').value,
 		// subject: document.getElementById('contactSubject').value,
 		// body: 'Name: ' + name + ' Email: ' + email + ' Message: ' + message,
-	}
+	};
+
 	let serviceID = "service_qentm0m";
 	let templateID = "template_vywxgoi";
 	
