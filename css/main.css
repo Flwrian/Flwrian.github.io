@@ -2633,4 +2633,8 @@ footer .copyright span:last-child::after {
 	color: #FFFFFF;
 }
 
+#about {
+	/* No blank at the end of the page */
+	padding-bottom: 0;
+}
 /*# sourceMappingURL=main.css.map */
