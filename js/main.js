@@ -300,10 +300,6 @@ function sendJSMail() {
 		document.getElementsByClassName("message-success")[0].style.visibility = "hidden";
 		return;
 	}
-
-	// Si l'utilisateur n'a pas encore envoyé de mail, on créer un cookie pour éviter qu'il en envoie plusieurs
-	document.cookie = "emailSent=true; max-age=3600";
-	idx++;
 	
 	// On récupère les données du formulaire
 	var params = {
@@ -326,14 +322,20 @@ function sendJSMail() {
 
 	let serviceID = "service_rkykry7";
 	let templateID = "template_s39qaop";
+
+
 	
 	emailjs.send(serviceID, templateID, params)
 		.then((res => {
 			document.getElementsByClassName("message-success")[0].style.visibility = "visible";
 			document.getElementsByClassName("message-warning")[0].style.visibility = "hidden";
+
+			document.cookie = "emailSent=true; max-age=3600";
+			idx++;
+
 		}), (err => {
 			document.getElementsByClassName("message-warning")[0].style.visibility = "visible";
-		document.getElementsByClassName("message-success")[0].style.visibility = "hidden";
+			document.getElementsByClassName("message-success")[0].style.visibility = "hidden";
 		}
 	));
 }
