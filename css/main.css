@@ -2670,6 +2670,10 @@ footer .copyright span:last-child::after {
 	z-index
 	: 0;
 	}
+
+.mailto {
+	color: #FFFFFF;
+}
 	
 
 /*# sourceMappingURL=main.css.map */
