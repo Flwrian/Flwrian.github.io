@@ -41,7 +41,7 @@
 	<header>   	
    	<div class="row">
 
-   		<div class="top-bar">
+   		<!-- <div class="top-bar">
    			<a class="menu-toggle" href="#"><span>Menu</span></a>
 
 	   		<div class="logo">
@@ -55,7 +55,7 @@
 						<li><a class="smoothscroll"  href="#projects" title="">Projects</a></li>
 					</ul>
 				</nav>    		
-   		</div> 
+   		</div>  -->
    		
    	</div>	
    </header>
@@ -75,7 +75,7 @@
 
 					<p class="intro-position">
 						<span class="typewriter">Young Developer</span>
-						<span>Crypto enjoyer</span>
+						<span>Gym Enthusiast</span>
 					</p>
 
 					<a class="button stroke smoothscroll" href="#about" title="">More About Me</a>
@@ -90,10 +90,10 @@
 
 			<li><a href="https://www.linkedin.com/in/florian-montourcy-76429022b/"><i class="fa fa-linkedin"></i></a>
 				<!-- discord friend link -->
-			<li>
+			<!-- <li>
 				<a href="https://discord.com/users/Flow#3790"><i class="fa-brands fa-discord"></i>
 				</a>
-			</li>
+			</li> -->
 			</li>
 			<li><a href="https://www.github.com/Flwrian"><i class="fa fa-github"></i></a></li>
 			<li><a href="https://www.youtube.com/channel/UCH07p9iU3MzpvrHELn96Iyw"><i class="fa fa-youtube"></i></a>
@@ -127,9 +127,11 @@
 			<div class="col-six tab-full">
 
 				<h3>Profile</h3>
-				<p>Living in France, 20 years old.
-					Student at UIT of Montpellier.</p>
-
+				<p>Living in France, Montpellier, 22 years old.
+					<br>
+					<p>I've been coding since I was in middle school and I
+					never stopped since. </p>
+				</p>
 				<ul class="info-list">
 					<li>
 						<strong>Fullname:</strong>
@@ -141,7 +143,7 @@
 					</li>
 					<li>
 						<strong>Job:</strong>
-						<span>Student, self-taught</span>
+						<span>Self-employed</span>
 					</li>
 					<li>
 						<strong>Website:</strong>
@@ -149,7 +151,17 @@
 					</li>
 					<li>
 						<strong>Email:</strong>
-						<span>florian.montourcy@etu.umontpellier.fr</span>
+						<span>floflomontage@gmail.com</span>
+					</li>
+
+					<li>
+						<strong>Hobbies:</strong>
+						<span>Chess, Gym, Music</span>
+					</li>
+
+					<li>
+						<strong>Phone:</strong>
+						<span>+33 7 81 65 61 17</span>
 					</li>
 
 				</ul>
@@ -157,33 +169,54 @@
 			</div>
 
 			<div class="col-six tab-full">
+				<br>
+				<p>I am always willing to <mark>learn</mark> some new stuff. I've done a lot of crazy personal projets but somehow, I can't always center my divs properly.
+				</p>
+				<br>
+				<p>I would say my main strength is my ability to learn quickly and to adapt to new situations. I am also a <mark>good team player</mark> and I can work under pressure.</p>
+				<br>
+				<p>I always care about <mark>architecture</mark> and <s>design</s>. I am always trying to make my code as clean as possible and to make it as efficient as possible.</p>
 
-				<p>I am always willing to learn some new tricks from my colleagues and I am always ready to help them
-					when they need it.</p>
+				<p>I love <mark>algorithms</mark> and I am always trying to find the best way to solve a problem.</p>
+
+				<p>I'm a big fan of <mark>Docker</mark> and <mark>VSCode</mark>. I also like <mark>Git</mark> and <mark>Unix</mark> systems.</p>
+			</div>
+
+		</div>
+
+			<div class="row button-section">
 
 				<h3>Skills</h3>
 				<ul class="skill-bars">
+					<li>
+						<div class="progress percent95"><span>95%</span></div>
+						<strong>Java</strong>
+					</li>
 					<li>
 						<div class="progress percent90"><span>90%</span></div>
 						<strong>Git</strong>
 					</li>
 					<li>
 						<div class="progress percent85"><span>85%</span></div>
-						<strong>PHP</strong>
+						<strong>Cybersecurity</strong>
+					</li>
+					<li>
+						<div class="progress percent85"><span>80%</span></div>
+						<strong>Computer Networking</strong>
 					</li>
 					<li>
 						<div class="progress percent70"><span>70%</span></div>
-						<strong>JavaScript</strong>
-					</li>
-					<li>
-						<div class="progress percent95"><span>95%</span></div>
-						<strong>Java</strong>
+						<strong>Unix OS</strong>
 					</li>
 					<li>
 
 						<div class="progress percent100"><span>100%</span></div>
 						<strong>Debugging</strong>
 					</li>
+
+					<li>
+						<div class="progress percent0"><span>0%</span></div>
+						<strong>Centering a div</strong>
 
 				</ul>
 
@@ -206,24 +239,23 @@
 					<h5>Projects</h5>
 					<h1>Some of my recent works.</h1>
 
-					<p class="lead">Here are some of my projects. I am always willing to learn new things and to improve
-						my skills.</p>
+					<p class="lead">Here are some of my recent projects.
 
 				</div>
 			</div>
 
-			<div class="project">
-				<!-- Chess game -->
-				<div class="row project-content">
+			<div class="project highlight"></div>
+				<!-- Chess game (Main project)-->
+				<div class="row project-content" style=" box-shadow: 50px 50px 50px 50px rgba(0, 0, 0, 0.3); border-radius: 10px; padding-top: 20px; padding-bottom: 20px;">
 					<div class="col-six tab-full left">
-						<h3>Chess game</h3>
-						<p>Chess game made in Java. It is a 2 players game. The goal is to checkmate the opponent king.
-							You can play with a friend or against the computer. The computer is using the minimax
-							algorithm to find the best move.</p>
+						<h3>Flowgine</h3>
+						<p>Flowgine is a Java <a href="https://en.wikipedia.org/wiki/Chess_engine">chess-engine</a> that uses the <a href="https://en.wikipedia.org/wiki/Minimax">Minmax algorithm</a> with <a href="https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning">alpha-beta pruning</a>. My most time consuming project. It was a great way to learn about <mark>optimization</mark> and how to make a program as efficient as possible. It was the first time I had to trade off between speed/efficiency and readability.</p>
+						<p>This project made me use a lot of knowledge and also made me break my head a lot of times but I am proud of the result.</p>
+						<p>I'm still working on it sometimes to improve it.</p>
 						<ul class="project-list">
 							<li><span>Java</span></li>
 							<li><span>Minimax algorithm</span></li>
-							<li><span>2 players game</span></li>
+							<li><span>Optimization</span></li>
 						</ul>
 						<div class="info">
 							<a href="https://lichess.org/@/FlowBot/all" class="button button-primary">View Demo</a>
@@ -241,17 +273,17 @@
 					<div class="row project-content">
 						<div class="col-six tab-full left">
 							<h3>CompanyPoll</h3>
-							<p>CompanyPoll is a desktop application that allows you to create polls and share them with
-								your employees. It has the top level of security that you can ever imaginate. It also
-								use JavaFX to create a beautiful interface.</p>
+							<p>CompanyPoll is a desktop application that allows you to <mark>create polls and share them with
+								your employees</mark>. It has the top level of security that you can ever imagine. It also
+								uses JavaFX to create a beautiful interface. The app utilizes <a href="https://en.wikipedia.org/wiki/Zero-knowledge_proof" target="_blank">Zero-knowledge proof</a> for polls to ensure the the poll is not tampered with.</p>
+
+							<p>It was a project for my computer science degree.</p>
 							<ul class="project-list">
 								<li><span>Java</span></li>
 								<li><span>JavaFX</span></li>
 								<li><span>Desktop application</span></li>
 							</ul>
-							<div class="info">
-								<a href="" class="button button-primary">View Demo</a>
-							</div>
+							
 						</div>
 						<div class="col-six tab-full right">
 							<img src="images/companypoll.png" alt="CompanyPoll">
@@ -262,8 +294,8 @@
 						<!-- Neural Network -->
 						<div class="row project-content">
 							<div class="col-six tab-full left">
-								<h3>Neural Network</h3>
-								<p>Simple Neural Network made in Python and also Java. It can be used to train on simple
+								<h3>Neural Network (AI)</h3>
+								<p>Simple Neural Network made in Python and also Java. It can be used to train on very simple
 									data and process them as you want</p>
 								<ul class="project-list">
 									<li><span>Python</span></li>
@@ -279,31 +311,157 @@
 							</div>
 						</div>
 
-						<!-- <div class="project">
-				<div class="row project-content">
-					<div class="col-six tab-full left">
-						<h3>Scrabble Game</h3>
-						<p>Scrabble game with 1 or more AI opponents. You can set the level of difficulty of the AI and change the dictionary that is used to find the best words.</p>
-						<ul class="project-list">
-							<li><span>Java</span></li>
-							<li><span>2-8 players</span></li>
-						</ul>
-					</div>
-					<div class="col-six tab-full right">
-						<img src="images/scrabble_demo.gif" alt="Scrabble IA">
-					</div>
-			</div> -->
+						<!-- Poker odds calculator -->
+						<div class="project">
+							<div class="row project-content">
+								<div class="col-six tab-full left">
+									<h3>Poker odds calculator</h3>
+									<p>Simple poker odds calculator made with React. It can calculate the odds of winning a
+										hand in poker. This project was meant to be a simple project to improve my front-end
+										skills and <mark>learn React</mark>
+									<ul class="project-list">
+										<li><span>React</span></li>
+										<li><span>UI</span></li>
+									</ul>
+									<div class="info">
+										<a href="https://poker-odds-calculator-7tdt.vercel.app/" class="button button-primary">View Demo</a>
+									</div>
+								</div>
+								<div class="col-six tab-full right">
+									<img src="images/poker.png" alt="Poker odds calculator">
+								</div>
+							</div>
+						</div>
 
-		</section> <!-- end portfolio -->
+						<!-- Mot croises -->
+						<div class="project">
+							<div class="row project-content">
+								<div class="col-six tab-full left">
+									<h3>CrossWord</h3>
+									<p>Simple crossword game made with Python and Flask. It can generate a crossword puzzle
+										from a list of words. It was a fast and simple project to <mark>improve front-end skills</mark> and I liked using Flask.</p>
+									<ul class="project-list">
+										<li><span>Python</span></li>
+										<li><span>Flask</span></li>
+										<li><span>Front-end</span></li>
+									</ul>
+									<div class="info">
+										<a href="https://mot-croises.vercel.app/" class="button button-primary">View Demo</a>
+									</div>
+								</div>
+								<div class="col-six tab-full right">
+									<img src="images/croises.png" alt="Mots croisés">
+								</div>
+							</div>
+						</div>
 
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
-		</script>
-		<script type="text/javascript">
-			(function () {
-				//   emailjs.init("19W_oMPJNkZHdnJm8");
-				emailjs.init("FiU04o7VX8jZRLLCt");
-			})();
-		</script>
+							
+		</section>
+
+		<!-- Story section -->
+		<section id="story">
+			<div class="row section-intro">
+				<div class="col-twelve">
+
+					<h5>Story</h5>
+					<h1>How I started programming</h1>
+
+					<p class="lead">I started programming when I was 12 years old. I was playing a lot of video games and I
+						wanted to create my own. I started with <mark>Scratch</mark> and then I moved to <mark>Python</mark>.
+						</p>
+					<p>After that, I started to learn <mark>Java</mark> and I made maybe hundreds of very <s>useful</s> projets and never stopped since. I am now trying to be a full-stack developer and I am always trying to learn new things.</p>
+					<p>My favorite language is <mark>Java</mark> but I also like Python and C#.</p>
+
+				</div>
+			</div>
+		</section>
+
+		<!-- photo of me -->
+	<div class="row section-intro">
+		<div class="col-twelve">
+			<img src="images/moi.png" alt="Photo of me" id="photo" style="cursor: pointer; transition: transform 0.3s ease;">
+		</div>
+	</div>
+
+	<!-- Modal for zooming the photo -->
+	<div id="photoModal" class="modal">
+		<img class="modal-content" id="imgZoom" style="scale: 2.5;">
+	</div>
+
+	<style>
+		#photo:hover {
+			transform: scale(1.1);
+		}
+
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 1;
+			padding-top: 100px;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgb(0, 0, 0);
+			background-color: rgba(0, 0, 0, 0.9);
+		}
+
+		.modal-content {
+			margin: auto;
+			display: block;
+			width: 80%;
+			max-width: 700px;
+		}
+
+		.close {
+			position: absolute;
+			top: 15px;
+			right: 35px;
+			color: #f1f1f1;
+			font-size: 40px;
+			font-weight: bold;
+			transition: 0.3s;
+		}
+
+		.close:hover,
+		.close:focus {
+			color: #bbb;
+			text-decoration: none;
+			cursor: pointer;
+		}
+	</style>
+
+	<script>
+		var modal = document.getElementById("photoModal");
+
+		var img = document.getElementById("photo");
+		var modalImg = document.getElementById("imgZoom");
+		img.onclick = function () {
+			modal.style.display = "block";
+			modalImg.src = this.src;
+		}
+
+		window.onclick = function (event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+
+		document.onkeydown = function (evt) {
+			evt = evt || window.event;
+			if (evt.keyCode == 27) {
+				modal.style.display = "none";
+			}
+		}
+	</script>
+
+		<section id="lol" style="padding-top: 120px;"
+			<div class="row section-intro">
+				<div class="col-twelve">
+					<p class="lead">If you're here, you're probably a recruiter or someone who wants to know more about me. If you're a
+						recruiter, You should ask your back-end team to center a div. If they can't too, well, I guess I'm not the only one.</p>
+		</section>
 
 
 		<!-- Contact section -->
