@@ -1402,6 +1402,7 @@ header .logo a {
 	left: 1.2rem;
 }
 
+
 .intro-social {
 	display: block;
 	position: absolute;
@@ -2676,5 +2677,71 @@ footer .copyright span:last-child::after {
 	color: #FFFFFF;
 }
 	
+#introFlowgine {
+	background: #151515 url(../images/chessarticle.jpg) no-repeat center bottom;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+	background-attachment: fixed;
+	width: 100%;
+	height: 100%;
+	min-height: 720px;
+	display: table;
+	position: relative;
+	text-align: center;
+}
 
+#article {
+	color: #FFFFFF;
+	font-size: 1.5rem;
+	font-family: "poppins-regular", sans-serif;
+	opacity: 0.9;
+}
+
+#article h5 {
+	color: #FF0077;
+	font-size: 2.5rem;
+	font-family: "poppins-bold", sans-serif;
+	margin-top: 1.5rem;
+}
+
+strong {
+	color: #FF0077;
+}
+
+em {
+	color: #FF0077;
+}
+
+#article .intro {
+	margin-top: 1.5rem;
+	font-size: 2.0rem;
+	opacity: 0.9;
+	color: #ffffff;
+}
+
+#article ul {
+	margin-top: 1.5rem;
+}
+
+#article ul li {
+	margin: 1.5rem;
+}
+
+#article p {
+	padding-left: 1.5rem;
+}
+
+.button-bumpy {
+	animation: bumpy 0.5s ease-in-out infinite;
+}
+
+@keyframes bumpy {
+	0%, 100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-5px);
+	}
+}
 /*# sourceMappingURL=main.css.map */

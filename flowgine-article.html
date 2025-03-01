@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="no-js oldie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+
+	<meta charset="utf-8">
+	<title>Florian</title>
+	<meta name="description" content="Portfolio">
+	<meta name="author" content="Florian Montourcy">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+   ================================================== -->
+	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/vendor.css">
+
+	<!-- script
+   ================================================== -->
+	<script type="text/javascript" src="js/main.js" defer></script>
+	<script src="https://kit.fontawesome.com/7fb5f97350.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.2/particles.min.js
+	"></script>
+
+	<!-- favicons
+	================================================== -->
+	<link rel="icon" type="image/png" href="images/profile-pic.jpg">
+
+</head>
+
+<body id="top">
+    <!-- Article about Flowgine -->
+    <section id="introFlowgine">
+
+        <!-- Return to home SVG -->
+        <a href="./index.html#flowgine" style="position: fixed; z-index: 99; top: 2%; left: 2%;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        </a>
+
+        <div class="intro-overlay"></div>
+        <canvas class="background"></canvas>
+
+        <div class="intro-content">
+            <div class="row">
+
+                <div class="col-twelve">
+
+                    <h5>My first Chess Engine</h5>
+                    <h1>Flowgine</h1>
+
+                    <p class="intro-position">
+                        <span>Java</span>
+                        <span>Algorithms</span>
+                        <span>Chess</span>
+                    </p>
+
+                    <h2 style="color: #bdbdbd; padding-top: 6%;">How I built my first chess engine in Java</h2>
+
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <style>
+        a {
+            color: #FF0077 !important;
+            border-bottom: 1px solid #FF0077 !important;
+        }
+        
+    </style>
+    
+    <section id="article">
+        <div class="row">
+            <div class="col-twelve">
+                <h5>Introduction</h5>
+                <p><strong>Building a chess engine</strong> is a rite of passage for many programmers, and I was no exception. I had always been fascinated by chess and wanted to understand the intricacies of how engines like <em>Stockfish</em> and <em>Lc0</em> worked. So, I decided to take on the challenge of building my own chess engine from scratch in <strong>Java</strong>.</p>
+                <p>In this article, I’ll share my journey, the challenges I faced, and the lessons I learned along the way. I’ll also provide some insights into the development process and how I approached various aspects of chess programming.</p>
+                <h5>Why Build a Chess Engine?</h5>
+                <p>Building a chess engine is not just about creating a program that can play chess. It’s an opportunity to learn about <strong>algorithms</strong>, <strong>data structures</strong>, and <strong>optimization techniques</strong>. It also provides a deep understanding of the game itself, including its rules, strategies, and complexities.</p>
+                <p>For me, the motivation was twofold: I wanted to challenge myself as a programmer and gain a deeper appreciation for the game of chess. I had played chess casually for years, but I wanted to understand the mechanics behind the engines that could play at a grandmaster level.</p>
+
+                <h5> Version 1: A rough start</h5>
+                <p>My first attempt at building a chess engine was far from perfect, but it was an invaluable learning experience. When I first started, I had no idea how complex chess programming could be. I had played chess before and understood the rules well, but coding an engine that could play even at a basic level was a completely different challenge.</p>
+                <p>At first, I thought the best approach was to represent the board using a simple 64-integer array, where each index represented a square, and each value represented a piece. This seemed straightforward, but as I started implementing move generation, things quickly got messy. Checking for legal moves required iterating through the entire board constantly, and handling special rules like <a href="https://en.wikipedia.org/wiki/En_passant">en passant</a> and <a href="https://en.wikipedia.org/wiki/Castling">castling</a> was far more complex than I had anticipated.</p>
+                <p>I didn’t follow a structured approach; instead, I learned as I went, referring to various resources on chess programming. Some of the most useful references I found included:</p>
+                <ul>
+                    <li>The <a href="https://www.chessprogramming.org/Main_Page">Chess Programming Wiki</a>, which has detailed explanations on everything from move generation to evaluation functions.</li>
+                    <li>Open-source chess engines like <a href="https://stockfishchess.org/">Stockfish</a> and <a href="https://github.com/AndyGrant/Ethereal">Ethereal</a>, which provided inspiration on efficient coding practices.</li>
+                    <li>The <a href="https://discord.gg/stockfish">Stockfish Discord community</a>, where experienced developers discussed best practices and debugging techniques.</li>
+                </ul>
+                <p>Despite my initial enthusiasm, the first version of my engine had severe limitations. It lacked essential chess rules like <a href="https://en.wikipedia.org/wiki/En_passant">en passant</a> and <a href="https://en.wikipedia.org/wiki/Castling">castling</a>. Instead of using bitboards, I relied on a simple 64-integer array to represent the board, which quickly became a nightmare. It was cumbersome to work with, and I immediately realized that this was the primary reason for my engine’s poor performance. Additionally, there was no <a href="https://en.wikipedia.org/wiki/Universal_Chess_Interface">Universal Chess Interface (UCI)</a> support—just basic commands to play moves.</p>
+                <p>Despite its shortcomings, this initial version taught me crucial lessons that would help me tremendously when I decided to start over from scratch.</p>
+                <h5>Version 2: A complete overhaul</h5>
+                <p>Determined to build something more efficient, I spent an entire week rewriting my chess engine from the ground up. This time, I implemented <a href="https://www.chessprogramming.org/Bitboards">bitboards</a>, which significantly improved performance. I also developed a <a href="https://www.chessprogramming.org/Perft">Perft tool</a> to compare my move generation results with <em>Stockfish</em>, ensuring accuracy.</p>
+                <h5>Day 1: Experimenting with Bitboards</h5>
+                <p>I started by creating a prototype for my <strong>Bitboard class</strong>. Bitboards were completely new to me, so I spent a good part of the day reading up on bitwise operations and testing small code snippets. My main goal was to understand how shifting bits could help with move generation. I wrote functions to set, clear, and manipulate bits on a 64-bit integer to represent piece positions efficiently. By the end of the day, I had a basic implementation that I could experiment with, and I was starting to see the advantages of using bitboards over my previous 64-integer array approach.</p>
+                <h5>Day 2: Move Generation Begins</h5>
+                <p>With a working bitboard structure, I started implementing functions to generate pseudo-legal moves. This was where the real challenge began. <strong>Pawns</strong> were particularly tricky due to their unique movement and capturing rules, especially <a href="https://en.wikipedia.org/wiki/En_passant">en passant</a>. <strong>Knights</strong> were the easiest to implement, given their fixed jump pattern.</p>
+                <p>Midway through the day, I realized that storing precomputed attack tables for sliding pieces (bishops, rooks, queens) would make my move generation significantly faster. I started implementing attack masks that would allow me to quickly determine the squares a piece could attack based on occupancy.</p>
+                <p>By the end of the day, I had some basic movement rules implemented, but they were not yet optimized.</p>
+                <h5>Day 3: Completing and Optimizing Move Generation</h5>
+                <p>This day was all about refining and optimizing my move generator. I thought about implemented magic bitboards to speed up move lookups for sliding pieces but I didn't. I know that it would give a massive performance boost compared to naive methods but it wasn't my priority. Instead, I optimized as much as I could. I also wrote helper functions to extract moves from bitboards efficiently.</p>
+                <p>A major milestone was adding move visualization. I created a simple console-based board representation that allowed me to print moves and verify their correctness. Seeing my engine generate and print legal moves was the first moment where I thought, this might actually work.</p>
+                <h5>Day 4: Perft Debugging – Welcome to Hell</h5>
+                <p>With move generation mostly implemented, I turned to verification using <a href="https://www.chessprogramming.org/Perft">Perft</a>. I ran my engine at depth 1 and compared results with <em>Stockfish</em>. Everything looked good. Then I tried depth 2. Looked good. And as I tried more and more depths, I was more and more staring at the screen, praying that it would be good. That’s when I discovered my engine was brilliantly, perfectly, super bugged. Problems started appearing after depth 4 I think.</p>
+                <p>This was one of the most frustrating parts of the project. One tiny bug in move generation could cause thousands of incorrect positions in deeper Perft tests. I spent hours staring at logs, printing board states, and manually checking moves to identify where things were going wrong. Rook moves were occasionally skipping squares. <a href="https://en.wikipedia.org/wiki/En_passant">En passant</a> was randomly failing in certain edge cases. I fixed a few issues, reran the tests, and—more bugs appeared.</p>
+                <p>By the end of the day, I had written a debugging tool that allowed me to compare move lists with <em>Stockfish</em> in real time. This made the debugging process slightly less painful.</p>
+                <h5>Day 5: More Debugging – A Test of Patience</h5>
+                <p>If day 4 was frustrating, day 5 was soul-crushing. I spent the entire day fixing Perft errors, running test cases, and verifying that my engine was generating correct move counts. At one point, I considered giving up. But after hours of debugging, my Perft results finally matched <em>Stockfish</em> at all tested depths. I had done it—my move generator was finally working correctly!</p>
+                <h5>Day 6: Implementing the Search Algorithm</h5>
+                <p>With move generation fixed, I finally got to work on the actual chess engine logic. I implemented a basic <a href="https://www.chessprogramming.org/Minimax">minimax search</a> with <a href="https://www.chessprogramming.org/Alpha-Beta">alpha-beta pruning</a>. This allowed my engine to look ahead multiple moves and evaluate positions. I also wrote a simple evaluation function that considered material balance.</p>
+                <p>Later in the day, I added a function to export games in <a href="https://en.wikipedia.org/wiki/Portable_Game_Notation">PGN format</a>, which allowed me to save and analyze games played by my engine.</p>
+                <h5>Days 7-8: Final Touches and UCI Implementation</h5>
+                <p>I spent these final days cleaning up the code and making the engine compatible with the <a href="https://en.wikipedia.org/wiki/Universal_Chess_Interface">UCI protocol</a>. This meant my engine could now communicate with chess GUIs like <em>CuteChess</em> and <em>Arena</em>. Testing it in a real GUI felt incredibly rewarding. Finally, I made some final optimizations to improve search speed.</p>
+                <h5>Lessons Learned and Future Improvements</h5>
+                <p>Once I attempted to make my engine stronger, I realized how incredibly difficult chess engine development is. Writing a basic move generator is one thing, but creating a strong search algorithm requires deep knowledge of advanced algorithms and chess heuristics.</p>
+                <h5>The Challenge of Optimization</h5>
+                <p>Optimizing a chess engine is a massive challenge because:</p>
+                <ul>
+                    <li>Every millisecond counts – Even small inefficiencies in move generation can slow down the engine significantly when searching millions of positions per second.</li>
+                    <li>Pruning is essential – Without techniques like <a href="https://www.chessprogramming.org/Alpha-Beta">alpha-beta pruning</a>, an engine evaluates far too many useless positions.</li>
+                    <li>Heuristic evaluation is complex – Evaluating positions effectively requires deep chess knowledge and extensive tuning.</li>
+                </ul>
+                <h5>Acknowledgments</h5>
+                <p>Throughout this journey, the <em>Stockfish Discord community</em> was incredibly helpful. Their insights and discussions helped me understand common pitfalls and best practices. I would recommend anyone interested in chess programming to join their community.</p>
+                <h5>Final Thoughts</h5>
+                <p>Building my first chess engine was one of the most rewarding programming experiences I’ve ever had. While my engine is far from the level of <em>Stockfish</em> or <em>Lc0</em>, it’s a project I’m proud of. I continue to revisit it, improving the AI and learning more about optimization. If you’re considering building your own chess engine, be prepared for an intense but highly educational challenge!</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
