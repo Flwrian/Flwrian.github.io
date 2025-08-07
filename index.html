@@ -245,25 +245,31 @@
 			</div>
 
 			<div class="project highlight" id="flowgine">
-				<!-- Chess game (Main project)-->
+
+
 				<div class="row project-content" style=" box-shadow: 50px 50px 50px 50px rgba(0, 0, 0, 0.3); border-radius: 10px; padding-top: 20px; padding-bottom: 20px;">
 					<div class="col-six tab-full left">
-						<h3>Flowgine</h3>
-						<p>Flowgine is a Java <a href="https://en.wikipedia.org/wiki/Chess_engine">chess-engine</a> that uses the <a href="https://en.wikipedia.org/wiki/Minimax">Minmax algorithm</a> with <a href="https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning">alpha-beta pruning</a>. My most time consuming project. It was a great way to learn about <mark>optimization</mark> and how to make a program as efficient as possible. It was the first time I had to trade off between speed/efficiency and readability.</p>
-						<p>This project made me use a lot of knowledge and also made me break my head a lot of times but I am proud of the result.</p>
-						<p>I'm still working on it sometimes to improve it.</p>
-						<ul class="project-list">
-							<li><span>Java</span></li>
-							<li><span>Minimax algorithm</span></li>
-							<li><span>Optimization</span></li>
-						</ul>
-						<div class="info">
-							<a href="./flowgine-article.html" class="button button-primary button-bumpy">Read Article</a>
-							<a href="https://github.com/Flwrian/JavaChessEngine" class="button button-primary">Github Repository <i class="fa fa-github"></i></a>
-						</div>
-					</div>
-					<div class="col-six tab-full right">
-						<img src="images/chess_demo_compress.gif" alt="Chess game">
+  <h3>Flowgine</h3>
+  <p>Flowgine is a Java <a href="https://en.wikipedia.org/wiki/Chess_engine">chess-engine</a> that uses the <a href="https://en.wikipedia.org/wiki/Minimax">Minmax algorithm</a> with <a href="https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning">alpha-beta pruning</a>. My most time consuming project. It was a great way to learn about <mark>optimization</mark> and how to make a program as efficient as possible. It was the first time I had to trade off between speed/efficiency and readability.</p>
+  <p>This project made me use a lot of knowledge and also made me break my head a lot of times but I am proud of the result.</p>
+  <p>I'm still working on it sometimes to improve it.</p>
+
+  <ul class="project-list">
+    <li><span>Java</span></li>
+    <li><span>Minimax algorithm</span></li>
+    <li><span>Optimization</span></li>
+  </ul>
+
+  <div class="info">
+    <a href="./flowgine-article.html" class="button button-primary button-bumpy">Read Article</a>
+    <a href="https://github.com/Flwrian/JavaChessEngine" class="button button-primary">Github Repository <i class="fa fa-github"></i></a>
+  </div>
+
+</div>
+
+<div class="col-six tab-full right">
+						<div id="bot-status" style="margin-top: 20px;"></div>
+						
 					</div>
 				</div>
 
@@ -537,6 +543,118 @@
 		<script src="js/plugins.js"></script>
 
 		<script src="js/particles.js"></script>
+<script>
+const botUsername = "flowbot";
+const statusDiv = document.getElementById("bot-status");
+
+async function getBotStatus() {
+  try {
+    const statusRes = await fetch(`https://lichess.org/api/users/status?ids=${botUsername}`);
+    const statusJson = await statusRes.json();
+    const bot = statusJson[0];
+
+    if (bot.playing) {
+      // Bot is currently playing → get current game PGN
+      const pgnRes = await fetch(`https://lichess.org/api/user/${botUsername}/current-game`);
+      const pgnText = await pgnRes.text();
+
+      // Extract [Site "https://lichess.org/xxxx"]
+      const match = pgnText.match(/\[Site "https:\/\/lichess\.org\/([a-zA-Z0-9]{8})"]/);
+	  console.log("PGN Text:", pgnText); // Debugging line
+	  console.log("Match:", match); // Debugging line
+      if (match) {
+        const gameId = match[1];
+        
+		// bbutton to view live game
+		statusDiv.innerHTML = `
+		  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <div style="width: 12px; height: 12px; border-radius: 50%; background-color: red; animation: pulse 1s infinite;"></div>
+            <span style="font-weight: bold; color: red;">Bot is currently playing</span>
+          </div>
+
+		  <a href="https://lichess.org/${gameId}" class="button button-primary live-btn" target="_blank">View Live Game</a>
+		`;
+        return;
+      } else {
+        statusDiv.innerHTML = "<p>Unable to extract game ID from PGN.</p>";
+        return;
+      }
+    } else {
+      // Not playing → get last game
+      const res = await fetch(`https://lichess.org/api/games/user/${botUsername}?max=1`, {
+        headers: { "Accept": "application/x-ndjson" }
+      });
+      const text = await res.text();
+      const lines = text.trim().split("\n");
+      if (lines.length === 0) {
+        statusDiv.innerHTML = "No games found.";
+        return;
+      }
+
+      const game = JSON.parse(lines[0]);
+      const gameId = game.id;
+      const lastMoveTime = new Date(game.lastMoveAt || game.createdAt);
+      const now = new Date();
+      const diffMinutes = Math.floor((now - lastMoveTime) / 60000);
+
+      statusDiv.innerHTML = `
+        <p style="margin-bottom: 10px;">Last game was ${diffMinutes} minutes ago</p>
+        <div class="lichess-embed-wrapper">
+          <iframe src="https://lichess.org/embed/game/${gameId}?theme=auto&bg=auto"
+                  frameborder="0" allowfullscreen></iframe>
+        </div>
+      `;
+    }
+  } catch (err) {
+    console.error("Lichess API error:", err);
+    statusDiv.innerHTML = "<p>Error loading bot status.</p>";
+  }
+}
+
+getBotStatus();
+</script>
+
+
+<style>
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+.live-btn {
+  animation: pulseBtn 1s infinite;
+}
+
+@keyframes pulseBtn {
+  0% { box-shadow: 0 0 0 0 rgba(255,0,0,0.6); }
+  70% { box-shadow: 0 0 0 10px rgba(255,0,0,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,0,0,0); }
+}
+
+.lichess-embed-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 66.25%; /* Ratio 4:3 = 100 / (4/3) = 75% — ici on met un peu moins */
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.lichess-embed-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+</style>
+
+
+
 
 </body>
 
