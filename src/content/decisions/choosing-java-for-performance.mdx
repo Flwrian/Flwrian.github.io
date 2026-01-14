@@ -1,0 +1,203 @@
+---
+title: "Choosing Java for Performance-Critical Code"
+date: 2024-01-15
+context: "When starting Aspira (chess engine), conventional wisdom says 'use C++ for performance'. Chess engines are extremely performance-sensitive - every nanosecond matters when evaluating 20+ million positions per second. Why choose Java?"
+decision: "Build Aspira in Java despite it being 'slower' than C++ for this domain."
+alternatives:
+  - option: "C++"
+    pros:
+      - "Dominant language for chess engines"
+      - "Manual memory management"
+      - "No GC pauses"
+      - "Maximum control over performance"
+    cons:
+      - "Memory safety issues"
+      - "Longer development time"
+      - "More complex tooling"
+      - "Manual memory management is also a con"
+  - option: "Rust"
+    pros:
+      - "Memory safety without GC"
+      - "Performance comparable to C++"
+      - "Modern language design"
+    cons:
+      - "Steeper learning curve"
+      - "Smaller ecosystem for chess engines"
+      - "Would spend more time fighting borrow checker than building engine"
+reasoning: "Java is the language I know deeply. Building a chess engine is hard enough without learning a new language simultaneously. The JIT compiler is sophisticated enough to produce competitive performance. Modern Java (17+) has value types coming, which will help with allocation-heavy code. GC pauses can be managed with proper tuning. I wanted to prove that good algorithmic design and optimization matter more than raw language performance."
+tags:
+  - "Performance"
+  - "Java"
+  - "Trade-offs"
+outcome: "Aspira reaches 20-22M nodes/sec on a Ryzen 5 5500U (30M+ on Ryzen 7 7800X3D). While top C++ engines are faster, the performance is competitive enough to reach 2100+ Elo. More importantly, I learned deep optimization techniques that apply to any language. The decision validated that algorithmic correctness and careful optimization matter more than language choice for many applications."
+relatedProjects:
+  - "aspira-chess-engine"
+relatedDecisions:
+  - "rewrite-over-refactor"
+---
+
+## The Conventional Wisdom
+
+Chess engine development has strong conventional wisdom:
+
+**"Use C++ or you'll be too slow."**
+
+Look at the top engines:
+- Stockfish: C++
+- Leela Chess Zero: C++ (with CUDA/OpenCL)
+- Komodo: C++
+- Ethereal: C
+
+The performance argument seems airtight. Chess engines spend most of their time in hot loops evaluating positions. Tiny performance differences compound over millions of nodes.
+
+## Why I Chose Java Anyway
+
+### 1. Language Familiarity
+
+I know Java deeply. Not just syntax - I understand the JVM, memory management, JIT optimization, GC tuning.
+
+Learning a chess engine is hard enough. Learning C++ simultaneously would split my focus.
+
+**Better**: Good code in a familiar language
+**Worse**: Mediocre code in an unfamiliar language
+
+### 2. The JIT is Sophisticated
+
+Modern JVMs are incredibly sophisticated. The JIT compiler:
+- Optimizes hot paths aggressively
+- Inlines method calls
+- Eliminates dead code
+- Performs escape analysis
+- Optimizes based on runtime behavior
+
+You lose some control but gain automatic optimization that's hard to match manually.
+
+### 3. Memory Safety Matters
+
+Chess engines have complex state: board representation, hash tables, move lists. In C++, one wrong pointer and you're chasing memory corruption for hours.
+
+Java's memory safety means:
+- No segfaults
+- No use-after-free
+- No buffer overflows
+- Better debugging experience
+
+### 4. Development Speed
+
+Java's better tooling and safety features mean faster development:
+- Faster iteration cycles
+- Less time debugging memory issues
+- Better IDE support
+- Easier refactoring
+
+For a solo project, development speed matters.
+
+### 5. Proving a Point
+
+I wanted to prove that **algorithmic quality matters more than language choice** for many applications.
+
+Good algorithms in Java beat bad algorithms in C++. Careful optimization in Java gets you surprisingly far.
+
+## The Trade-offs
+
+### What I Gained
+
+**Safety**: No memory corruption bugs, faster debugging
+
+**Productivity**: Faster iteration, less time on language quirks
+
+**Portability**: JVM runs everywhere
+
+**Future Features**: Project Valhalla (value types) will improve performance further
+
+### What I Lost
+
+**Raw Performance**: Top C++ engines are faster (but not as much as you'd think)
+
+**Control**: Less control over memory layout and GC timing
+
+**Community**: Smaller Java chess engine community
+
+**Interoperability**: Harder to use existing C++ chess libraries
+
+## The Results
+
+Aspira currently reaches:
+- **20-22M nodes/sec** on Ryzen 5 5500U
+- **30M+ nodes/sec** on Ryzen 7 7800X3D
+- **2100+ Elo** on Lichess
+
+For comparison, Stockfish processes ~100M+ nodes/sec on similar hardware. But Stockfish is:
+- Decades of optimization
+- Hundreds of contributors
+- Purpose-built C++ from the start
+
+The gap is real but not insurmountable for learning purposes.
+
+## What This Taught Me
+
+### 1. Language Choice Matters Less Than You Think
+
+Good design and optimization in a "slower" language often beats mediocre code in a "faster" language.
+
+### 2. Know Your Tools Deeply
+
+Using Java well requires understanding:
+- How the JIT optimizes code
+- What causes allocations
+- How to minimize GC pressure
+- When to use primitive types
+- How to write cache-friendly code
+
+Superficial knowledge of any language won't produce good performance.
+
+### 3. Optimization is Universal
+
+The optimization techniques I learned apply to any language:
+- Minimize allocations in hot paths
+- Cache-friendly data structures
+- Branchless code where appropriate
+- Proper profiling before optimizing
+- Measure, don't guess
+
+### 4. Trade-offs Are Contextual
+
+For Stockfish (targeting world championship play), C++ is the right choice.
+
+For Aspira (learning and exploring), Java is the right choice.
+
+There's no universal "best language" - only best language for your specific constraints.
+
+## When to Choose Java for Performance
+
+Java is competitive for performance-critical code when:
+
+1. **Algorithm quality matters more than raw speed**: Good algorithm in Java > bad algorithm in C++
+2. **Development speed is important**: Faster iteration beats marginal performance gains
+3. **Team knows Java deeply**: Expertise matters more than theoretical performance
+4. **Memory safety is valuable**: Debugging time costs more than runtime speed
+5. **Portability matters**: JVM runs everywhere without recompilation
+
+Java is problematic when:
+1. **You need guaranteed latency**: GC pauses can be unpredictable
+2. **You need specific memory layout**: Less control over data structure layout
+3. **You're integrating with C libraries**: FFI overhead and complexity
+4. **Every nanosecond matters**: Sometimes you need that extra 2x
+
+## The Bottom Line
+
+Choosing Java for Aspira was right for my goals:
+- Learn chess engine architecture deeply
+- Prove that language choice isn't destiny
+- Build something competitive without fighting language complexity
+- Maintain development velocity on a solo project
+
+The result: a chess engine I understand completely, built in a language I know deeply, with performance that's competitive enough to matter.
+
+**Would I use C++ for a production chess engine targeting top-level play?** Probably yes.
+
+**Was Java the right choice for learning and exploring?** Absolutely yes.
+
+---
+
+*Choose tools based on your actual constraints, not conventional wisdom.*

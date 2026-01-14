@@ -251,99 +251,8 @@ const usesCollection = defineCollection({
   }),
 });
 
-/**
- * Speaking/Talks Collection
- * 
- * Conference talks, meetup presentations, podcast appearances, and workshops.
- * 
- * Features:
- * - Five talk types (conference, meetup, podcast, workshop, webinar)
- * - Links to slides and video recordings
- * - Event information and location
- * - Optional topics and duration
- * - Featured flag for highlighting
- */
-const speakingCollection = defineCollection({
-  loader: glob({ pattern: '**/*.mdx', base: './src/content/speaking' }),
-  schema: z.object({
-    /** Talk title */
-    title: z.string(),
-    
-    /** Talk description */
-    description: z.string(),
-    
-    /** Event name */
-    event: z.string(),
-    
-    /** Event website URL (optional) */
-    eventUrl: z.string().url().optional(),
-    
-    /** Date of the talk */
-    date: z.coerce.date(),
-    
-    /** Location (city, country, or "Online") */
-    location: z.string(),
-    
-    /** Type of speaking engagement */
-    type: z.enum(['conference', 'meetup', 'podcast', 'workshop', 'webinar']),
-    
-    /** Link to slides (optional) */
-    slides: z.string().url().optional(),
-    
-    /** Link to video recording (optional) */
-    video: z.string().url().optional(),
-    
-    /** Talk duration (e.g., "45 min", "1 hour") */
-    duration: z.string().optional(),
-    
-    /** Topics covered in the talk */
-    topics: z.array(z.string()).optional(),
-    
-    /** Whether to feature this talk */
-    featured: z.boolean().default(false),
-  }),
-});
-
-/**
- * Testimonials Collection
- * 
- * Endorsements and recommendations from colleagues and clients.
- * 
- * Features:
- * - Person details (name, role, company)
- * - Relationship context
- * - Quote text
- * - Optional LinkedIn profile link
- * - Featured flag for homepage display
- */
-const testimonialsCollection = defineCollection({
-  loader: glob({ pattern: '**/*.mdx', base: './src/content/testimonials' }),
-  schema: z.object({
-    /** Person's name */
-    name: z.string(),
-    
-    /** Person's role/title */
-    role: z.string(),
-    
-    /** Person's company */
-    company: z.string(),
-    
-    /** Relationship context (e.g., "Worked together at Company X") */
-    relationship: z.string(),
-    
-    /** Testimonial quote */
-    quote: z.string(),
-    
-    /** LinkedIn profile URL (optional) */
-    linkedin: z.string().url().optional(),
-    
-    /** Whether to feature on homepage */
-    featured: z.boolean().default(false),
-    
-    /** Date of the testimonial */
-    date: z.coerce.date(),
-  }),
-});
+// Speaking and Testimonials collections removed - not needed yet
+// You can add them back when you have content for these sections
 
 /**
  * Export all collections
@@ -357,6 +266,6 @@ export const collections = {
   journey: journeyCollection,
   writing: writingCollection,
   uses: usesCollection,
-  speaking: speakingCollection,
-  testimonials: testimonialsCollection,
+  // speaking: speakingCollection, // Removed - no speaking engagements yet
+  // testimonials: testimonialsCollection, // Removed - no testimonials yet
 };

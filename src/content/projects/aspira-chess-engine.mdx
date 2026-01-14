@@ -1,0 +1,147 @@
+---
+title: "Aspira - High-Performance Chess Engine"
+role: "Creator & Lead Developer"
+year: 2025
+duration: "10+ months (ongoing)"
+teamSize: 1
+outcomeSummary: "Built a UCI-compliant chess engine from scratch in Java reaching 2200+ Elo on Lichess, processing 20M nodes/second. A complete rewrite that forced mastery of low-level optimization, bitboard manipulation, and algorithmic complexity. My goal is to cross the 3000+ Elo milestone and compete with other top engines."
+overview: "Aspira is a chess engine written entirely in Java from the ground up. What started as 'let's make something that plays legal moves' evolved into one of the most mentally demanding projects I've worked on. Chess engines have this special property: everything depends on everything else. One small mistake, one shortcut, one assumption that isn't 100% correct — and suddenly nothing makes sense anymore."
+problem: "Chess engines are unforgiving. You don't just debug crashes — you debug ideas. A slightly wrong make/undo corrupts the position three plies later. One incorrect bit operation and evaluation becomes noise. The challenge wasn't just writing code that worked, it was writing code that worked correctly under extreme performance constraints, with no room for approximations."
+constraints:
+  - "Java performance overhead compared to C/C++ engines"
+  - "No chess libraries - everything built from scratch for deep understanding"
+  - "Memory allocation in hot loops significantly impacts performance"
+  - "Bitboard operations must be perfectly optimized"
+  - "Every component must be correct - no shortcuts allowed"
+approach: "The current version is not 'v1 with patches' — it's a full rewrite with everything I learned the hard way baked in. I implemented the complete chess ruleset, then focused on performance through bitboards and magic bitboards for sliding pieces. The architecture prioritizes correctness first, then performance through careful optimization of hot paths."
+keyDecisions:
+  - decision: "Bitboard-based representation using magic bitboards"
+    reasoning: "Magic bitboards provide O(1) lookup for sliding piece moves, crucial for the 20+ million nodes per second target. The complexity of implementation is worth the performance gain in the search tree."
+    alternatives:
+      - "Mailbox representation (simpler but slower)"
+      - "Rotated bitboards (complex, similar performance)"
+  - decision: "Full rewrite instead of patching initial version"
+    reasoning: "The initial design had fundamental architectural issues that couldn't be fixed incrementally. Starting fresh with lessons learned resulted in cleaner, faster, more maintainable code."
+    alternatives:
+      - "Incremental refactoring (would have taken longer with worse results)"
+  - decision: "Mono-threaded design"
+    reasoning: "Multi-threading in chess engines is significantly harder to implement correctly and requires proper hardware to pay off. Focusing on single-thread performance first establishes a solid baseline before adding concurrency complexity."
+    alternatives:
+      - "Lazy SMP (complex, would slow down initial development)"
+  - decision: "Hand-crafted evaluation (HCE) before NNUE"
+    reasoning: "Want to master traditional evaluation and reach high Elo with HCE before introducing neural network complexity. This provides better understanding of evaluation fundamentals."
+    alternatives:
+      - "Jump straight to NNUE (faster Elo gain but less educational)"
+techStack:
+  - "Java"
+  - "Bitboard manipulation"
+  - "Magic bitboards"
+  - "Zobrist hashing"
+  - "UCI protocol"
+  - "Alpha-beta pruning"
+  - "Quiescence search"
+  - "Transposition tables"
+impact:
+  metrics:
+    - label: "Performance"
+      value: "20-22M nodes/sec (Ryzen 5 5500U)"
+    - label: "Elo Rating"
+      value: "2100+ on Lichess"
+    - label: "Lines of Code"
+      value: "Several full rewrites"
+  qualitative: "This project fundamentally changed how I approach complex systems. It forced me to write correct code everywhere - there's no hiding in a chess engine. If one part is sloppy, the whole thing explodes. I spent nights debugging perft suites, tracking down single-bit errors that corrupted positions three moves later. The discipline required here translated to all my other work: careful design, proper testing, and deep understanding over quick hacks."
+learnings:
+  - "Performance comes from correctness, not clever tricks. Most gains came from fixing bugs and simplifying logic."
+  - "Complex systems require understanding at every level. Abstractions that look clean can hide critical performance issues."
+  - "Debugging conceptually wrong code is harder than debugging syntactically wrong code."
+  - "Incremental complexity management - build solid foundation before adding features."
+  - "The importance of profiling and measuring rather than guessing optimizations."
+featured: true
+status: "ongoing"
+order: 1
+relatedDecisions:
+  - "aspira-architecture-choices"
+  - "java-for-performance-critical"
+---
+
+## The Journey
+
+Aspira didn't start as an attempt to build a strong engine, and it definitely didn't stay simple for long.
+
+### What's Implemented
+
+The current baseline includes:
+
+- **Complete Chess Rules**: Castling, en passant, promotion, repetition detection
+- **Move Generation**: Bitboard-based with magic bitboards for sliding pieces
+- **Search Algorithm**: Alpha-beta pruning in negamax variant with quiescence search
+- **Evaluation**: Material evaluation + Piece Square Tables (PSQT)
+- **Optimizations**: 
+  - Transposition tables with Zobrist hashing
+  - Move ordering (History heuristic, MVV-LVA, TT move)
+  - Delta pruning in quiescence
+  - Mate distance pruning
+  - Null move pruning
+  - Iterative deepening
+- **Protocols**: Full UCI support
+- **Testing**: Perft testing suite for move generation correctness
+- **Time Management**: Autonomous play based on remaining time
+
+### Current Development
+
+I'm implementing additional techniques to push Elo higher:
+
+- **LMR (Late Move Reductions) + PVS**: Expected significant Elo gain
+- **Enhanced Evaluation**: Passed pawns, king safety, pawn structure
+- **Optimizations**: 
+  - Converting to fully legal move generation
+  - Move packing (32-bit → 16-bit)
+  - Pre-allocated MoveList stack to eliminate runtime allocations
+
+### The NNUE Step
+
+The next major milestone is NNUE (Neural Network-based evaluation). I've already done successful tests, but it requires:
+- Mass data generation from current HCE
+- Training on millions of positions (several hours of compute)
+- Careful integration to maintain performance
+
+With proper NNUE implementation and training, Aspira could reach the 3000+ Elo zone.
+
+## Performance Evolution
+
+The journey to 20M+ nodes per second wasn't one big optimization:
+
+- **March 2025** (Ryzen 7 7800X3D): ~15M nps with legal move generation
+- **December 2025** (Ryzen 5 5500U): ~13M nps, improved to 18M nps (perft semi-bulk)
+- **January 2026** (Ryzen 5 5500U): 20-22M nps (~30M nps on Ryzen 7 7800X3D)
+
+Each improvement came from:
+- Removing unnecessary allocations
+- Rewriting slow paths
+- Simplifying "clean" code that wasn't fast
+- Fixing correctness issues that had performance side-effects
+
+## Why This Was Hard
+
+I've literally spent nights debugging positions to pass perft suites. Move generation seems simple, but the bugs you create along the way surface during perft testing.
+
+You spend hours staring at code that *looks* correct, only to realize the bug is conceptually wrong, not syntactically wrong.
+
+That's what makes this project special. It forced me to think deeply about every decision, every data structure, every bit operation.
+
+## What's Next
+
+Continue development toward 3000+ Elo through:
+1. Complete LMR/PVS implementation
+2. Refine evaluation with advanced positional understanding
+3. Perfect the HCE baseline
+4. Implement and train NNUE
+5. Optimize memory layout and cache efficiency
+
+The name comes from *aspiring* — not just to build something stronger, but to understand something deeply enough that it stops being mysterious. Somewhere along the way, it also started aspiring my soul.
+
+## Contributing
+
+Aspira is open source and welcomes contributions. Whether it's performance improvements, evaluation tweaks, or bug fixes, I'm always open to discussions about engine design and chess programming.
+
+**Special thanks** to the Stockfish Discord Community for the invaluable discussions, feedback, and shared knowledge about engine design and NNUE implementation.

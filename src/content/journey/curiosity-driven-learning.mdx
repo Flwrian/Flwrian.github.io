@@ -1,0 +1,149 @@
+---
+title: "Curiosity-Driven Learning: Building to Understand"
+date: 2024-03-20
+type: "learning"
+description: "Why I build seemingly random projects: a file system in Java, a home surveillance system, a server homelab. Each project is a way to deeply understand how something works."
+skills:
+  - "Self-Learning"
+  - "Systems Thinking"
+  - "Problem Solving"
+  - "Full Stack"
+---
+
+## The "Useless" File System
+
+One day, I decided to build a file system in Java.
+
+Not because I needed a file system. Java already has perfectly good file I/O. Not because it would be production-ready. It wouldn't be.
+
+I built it because I wanted to **understand how file systems work**.
+
+Reading documentation tells you *what* a file system does. Building one teaches you *why* it's designed that way, what trade-offs exist, where complexity hides.
+
+## The Pattern
+
+Looking at my project history, it seems random:
+- A file system in Java
+- A home surveillance system with Raspberry Pi and camera
+- A home lab server replacing my old PC
+- A chess engine that processes 20M positions per second
+- A distributed chess testing platform
+
+But there's a pattern: **each project exists to understand something deeply**.
+
+## Learning by Building
+
+**Reading** teaches you surface knowledge. You understand the what and maybe the how.
+
+**Building** forces you to confront reality. You hit edge cases documentation doesn't mention. You discover why certain design decisions were made. You feel the pain of bad abstractions.
+
+### Example: The File System
+
+Reading about file systems: "Files are organized in blocks, with inodes tracking metadata..."
+
+Building a file system:
+- How do you handle fragmentation?
+- What happens if you run out of inodes?
+- How do you recover from partial writes?
+- Why is seeking expensive?
+- What trade-offs exist between block size and wasted space?
+
+You don't just know *what* a file system is - you understand *why* it works that way.
+
+## From Curiosity to Capability
+
+This approach has an interesting side effect: **I become capable at things by being curious about them**.
+
+**Home Lab Example**:
+- Started curious about server infrastructure
+- Built a home lab to explore
+- Now I understand networking, virtualization, resource management
+- Can deploy and manage complex systems
+
+**Chess Engine Example**:
+- Curious about how chess engines work
+- Built Aspira from scratch
+- Learned low-level optimization, bitboard operations, search algorithms
+- Gained expertise in performance-critical code
+
+**Distributed Systems Example**:
+- Wanted to understand coordination and failure handling
+- Built PawnPower with distributed workers
+- Learned about distributed state, network reliability, real-time communication
+- Can now architect distributed systems
+
+## The "I Can Do Anything" Trap
+
+There's a dangerous side to this: **feeling like you can do anything**.
+
+Technically, it's kind of true. Given enough time and curiosity, I can learn and build most things.
+
+But there's a gap between "can learn" and "should do":
+
+**Frontend development** is my acknowledged weakness. I *can* build frontend interfaces. I understand React, CSS, responsive design. But I'm not as competent as someone who specializes in it.
+
+I prefer being honest: let someone who loves frontend handle it while I focus on what I do best - backend systems, architecture, complex problem-solving.
+
+## Why This Matters
+
+This curiosity-driven approach shapes how I work:
+
+**1. I Learn Technologies When They're Needed**
+
+I don't learn React because it's popular. I learn it when a project needs it and I want to understand it deeply.
+
+This prevents resume-driven development: choosing technologies because they're trendy rather than because they solve the problem.
+
+**2. I Understand Trade-offs**
+
+When you've built systems from scratch, you understand their trade-offs viscerally:
+- Why databases are designed the way they are
+- When to optimize and when to ship
+- What complexity is necessary vs accidental
+- When to use established solutions vs build custom
+
+**3. I Can Dive Deep Quickly**
+
+Need to work with a new database? I understand database fundamentals, so I focus on what makes this one unique.
+
+New framework? I understand the patterns, so I learn the specifics.
+
+The fundamentals compound. Each deep dive makes the next one faster.
+
+## The Process
+
+When approaching something new:
+
+**1. Research fundamentals** - How does this work conceptually?
+
+**2. Build something small** - Make it concrete, hit real problems
+
+**3. Read source code** - See how experts solved it
+
+**4. Build something bigger** - Apply learnings, discover deeper complexity
+
+**5. Iterate** - Each version teaches you something
+
+This is slower than following tutorials. But the understanding is deeper and lasts longer.
+
+## Current Curiosities
+
+Right now I'm exploring:
+- NNUE (neural networks for chess evaluation)
+- Kernel-level optimization for Aspira
+- Advanced distributed system patterns
+- Cache-friendly data structures
+
+Each will likely become a project. Each project will teach me something that applies beyond its specific domain.
+
+## The Core Philosophy
+
+**I'm not just learning to code. I'm learning how systems work.**
+
+Code is a tool for understanding. Projects are experiments in learning.
+
+The goal isn't to build everything from scratch in production. It's to understand deeply enough that you make better decisions when using established solutions.
+
+---
+
+*"I'm passionate about understanding how everything around us works, and I love creating projects that help me discover how things function."*

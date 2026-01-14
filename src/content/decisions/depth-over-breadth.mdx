@@ -1,0 +1,179 @@
+---
+title: "Depth Over Breadth: Why I Focus on Java and Python"
+date: 2024-03-20
+context: "As a software engineer, there's constant pressure to know every language, framework, and tool. My resume could list C, JavaScript, Go, Rust, and a dozen others I've touched. But listing languages doesn't make you a better engineer."
+decision: "Focus deeply on Java and Python rather than maintaining superficial knowledge of many languages."
+alternatives:
+  - option: "Become a polyglot developer"
+    pros:
+      - "Impressive-looking resume"
+      - "Can jump between projects in different languages"
+      - "Broader theoretical knowledge"
+    cons:
+      - "Surface-level understanding of each language"
+      - "Miss language-specific optimization techniques"
+      - "Slower development in any given language"
+      - "Can't leverage ecosystem depth"
+  - option: "Learn one language only"
+    pros:
+      - "Maximum depth"
+      - "True expertise"
+    cons:
+      - "Limited problem-solving toolkit"
+      - "Some problems don't fit your language well"
+reasoning: "Two languages give me the right balance. Java for performance-critical, type-safe systems. Python for rapid development, scripting, and exploration. I'd rather be an expert in two languages than mediocre in ten. Deep knowledge means understanding the JVM internals, knowing when Python's GIL matters, recognizing performance footguns, and leveraging ecosystem strengths. That expertise compounds over time."
+tags:
+  - "Philosophy"
+  - "Career"
+  - "Learning"
+outcome: "This focus enabled building Aspira (20M+ nodes/sec in Java) and rapid IoT platform development at Alemca (Python/Flask). Instead of context-switching between languages, I built deep intuition. I can read Java bytecode, understand GC behavior, optimize hot paths. I know Python's async internals, when to use C extensions, how to profile memory. This depth makes me faster and more effective than being spread thin across many languages."
+relatedDecisions:
+  - "avoiding-resume-driven-development"
+  - "choosing-java-for-performance"
+---
+
+## The Polyglot Pressure
+
+The tech industry loves polyglots. Job postings list 10+ languages. Developers flex by showing GitHub repos in 15 different languages.
+
+**"Learn a new language every year!"**
+**"Good engineers can pick up any language quickly!"**
+
+Both statements are true. But they miss something important.
+
+## The Difference Between Knowing and Mastering
+
+I can write working code in:
+- **C**: Systems programming, pointer manipulation
+- **JavaScript**: Frontend work, Node.js servers
+- **Go**: Concurrent services, CLI tools
+- **Shell scripting**: Automation, system administration
+
+But there's a huge gap between "can write working code" and "can write excellent code".
+
+### What "Knowing" a Language Means
+- Syntax and basic idioms
+- Standard library awareness
+- Can build features
+- Can read documentation
+
+### What "Mastering" a Language Means
+- Performance characteristics and optimization
+- Ecosystem depth and best practices
+- Language-specific design patterns
+- Tooling expertise
+- When NOT to use the language
+
+## Why Java and Python
+
+### Java: My Performance Language
+
+I don't just "know Java". I understand:
+- **JVM internals**: JIT compilation, escape analysis, inlining
+- **Memory management**: Object layout, GC tuning, allocation patterns
+- **Performance**: Profiling, benchmarking, optimization strategies
+- **Concurrency**: Thread models, memory visibility, lock-free structures
+- **Ecosystem**: Build tools, testing frameworks, production libraries
+
+This depth let me build Aspira, a chess engine that reaches 20-22M nodes/sec. That requires understanding:
+- How to avoid allocations in hot loops
+- When the JIT will inline methods
+- How to structure code for CPU cache efficiency
+- GC pause management at high throughput
+
+**You can't get that from "knowing" Java.**
+
+### Python: My Productivity Language
+
+For Python, I understand:
+- **Performance**: When to use PyPy, Cython, or C extensions
+- **Async**: Event loops, coroutines, concurrency patterns
+- **Ecosystem**: Django, Flask, pytest, mypy, packaging
+- **Deployment**: WSGI, ASGI, production best practices
+- **Profiling**: cProfile, memory_profiler, finding bottlenecks
+
+At Alemca, this depth meant:
+- Building scalable Flask APIs quickly
+- Debugging production issues efficiently
+- Optimizing IoT data pipelines
+- Choosing the right libraries for each problem
+
+### Why Two Languages
+
+Two languages give me balance:
+
+**Java** = Type safety, performance, large-scale systems
+**Python** = Rapid development, exploration, scripting
+
+Most problems fit cleanly into one of these. When they don't, I pick the best tool and learn what I need - but I don't pretend to have deep expertise.
+
+## What I'm NOT Saying
+
+I'm not saying:
+- ❌ "Never learn new languages"
+- ❌ "Two languages are enough for everyone"
+- ❌ "Other languages are bad"
+
+I'm saying:
+- ✅ Deep expertise beats shallow breadth
+- ✅ Specialization compounds over time
+- ✅ Honest assessment beats resume padding
+
+## The Compounding Effect
+
+Here's what happens when you go deep:
+
+### Year 1
+- Learn syntax and basics
+- Build working features
+- Read documentation constantly
+
+### Year 2
+- Understand idioms and patterns
+- Recognize common pitfalls
+- Start optimizing code
+
+### Year 3
+- Internals make sense
+- Performance intuition develops
+- Ecosystem expertise builds
+
+### Year 4+
+- You see solutions others miss
+- Optimization becomes natural
+- You contribute back to ecosystem
+
+**This doesn't happen when you switch languages every year.**
+
+## How I Decide to Learn Something New
+
+I'll invest time learning a new language when:
+
+1. **Projects demand it**: If I'm building a systems tool, I'll learn Rust or Go
+2. **Significant advantages**: If a language solves problems my current stack can't
+3. **Long-term commitment**: I'm willing to go deep, not just dabble
+
+I won't learn a language because:
+- ❌ It's trending on HackerNews
+- ❌ It looks good on a resume
+- ❌ Someone said I "should know it"
+
+## The Resume Reality
+
+My resume doesn't list 10 languages. It lists:
+- **Expert**: Java, Python
+- **Proficient**: SQL, Bash
+- **Familiar**: C, JavaScript
+
+Some recruiters pass me over. That's fine. I'd rather work somewhere that values depth over breadth.
+
+## Advice for Others
+
+If you're early in your career:
+1. **Learn broadly at first** - Find what fits your brain
+2. **Pick 1-2 languages to master** - Where your projects live
+3. **Go deep** - Learn internals, performance, ecosystem
+4. **Stay there for years** - Let expertise compound
+5. **Learn new languages sparingly** - When truly needed
+
+Depth beats breadth. Every. Single. Time.

@@ -1,0 +1,252 @@
+---
+title: "Rewrite Over Refactor: When to Start From Scratch"
+date: 2024-03-10
+context: "Aspira v1 'worked' - it played legal chess moves and beat random players. But it had fundamental architectural issues: move generation was inefficient, board representation caused unnecessary allocations, and the search algorithm had subtle bugs. Should I refactor incrementally or rewrite from scratch?"
+decision: "Complete rewrite of Aspira, throwing away months of work to build on a better foundation."
+alternatives:
+  - option: "Incremental Refactoring"
+    pros:
+      - "Keeps working code running"
+      - "Lower risk - changes are small"
+      - "Continuous progress visible"
+      - "Can ship improvements gradually"
+    cons:
+      - "Architectural problems persist"
+      - "Each fix reveals more fundamental issues"
+      - "Technical debt compounds"
+      - "Some bugs unfixable without major changes"
+  - option: "Selective Rewrite"
+    pros:
+      - "Keep working parts, rewrite broken parts"
+      - "Lower risk than full rewrite"
+      - "Faster than rewriting everything"
+    cons:
+      - "Boundaries between old and new code create friction"
+      - "Old assumptions leak into new code"
+      - "Still carrying forward fundamental design issues"
+reasoning: "The core architecture had fundamental issues that couldn't be patched. Move generation, board representation, and search were all interconnected - fixing one exposed issues in others. Refactoring would be fighting the architecture continuously. A rewrite with lessons learned would be faster and result in cleaner, more maintainable code. The goal isn't just 'working' code - it's correct, fast, understandable code. Better to invest in solid foundation now than patch forever."
+tags:
+  - "Architecture"
+  - "Technical Debt"
+  - "Software Design"
+outcome: "The rewrite took significant time but resulted in dramatically better code. v2 is faster (20M+ nodes/sec vs ~8M), more correct (passes extensive perft suites), and more maintainable (easier to add features). Performance gains came from simpler, cleaner code rather than clever tricks. The solid foundation makes future improvements straightforward instead of fighting the architecture."
+relatedProjects:
+  - "aspira-chess-engine"
+relatedDecisions:
+  - "choosing-java-for-performance"
+---
+
+## The Painful Realization
+
+Aspira v1 worked. I could play it against other engines. It made legal moves, evaluated positions, managed time control.
+
+But deep down, I knew the architecture was wrong.
+
+### The Problems
+
+**Move Generation**: Generated pseudo-legal moves then filtered for legality. Inefficient and error-prone.
+
+**Board Representation**: Mixed bitboards and piece lists inconsistently. Caused unnecessary allocations and synchronization bugs.
+
+**Make/Unmake**: Subtle bugs in position restoration after trying moves. Would corrupt state several plies deep.
+
+**Search**: Alpha-beta implementation had edge cases where it didn't prune correctly. Hard to extend.
+
+**No Abstractions**: Everything was tangled. Couldn't change one thing without breaking three others.
+
+## The Refactoring Attempt
+
+I tried incremental refactoring first. Spent weeks trying to fix move generation without breaking everything else.
+
+Every fix revealed deeper issues:
+- Fix move generation → expose bugs in board representation
+- Fix board representation → break make/unmake
+- Fix make/unmake → expose search bugs
+- Fix search → back to move generation issues
+
+It was like pulling on a thread and watching the whole sweater unravel.
+
+## The Decision Moment
+
+After three weeks of fighting the architecture, I asked myself:
+
+**"How long would it take to rewrite this from scratch with everything I've learned?"**
+
+The honest answer: "Probably less time than continuing to patch this mess."
+
+That's when I made the decision: **complete rewrite**.
+
+## What Made This Hard
+
+Throwing away months of work hurts. You have functioning code. It does things. People can use it.
+
+Starting over feels like failure.
+
+But **sunk cost fallacy** is real. Past time invested shouldn't determine future decisions. The question is:
+
+**"What's the fastest path to good code from here?"**
+
+Sometimes that's refactoring. Sometimes it's rewriting.
+
+## The Rewrite Process
+
+### Phase 1: Core Representation (1 week)
+
+Built solid foundation:
+- Clean bitboard representation
+- Proper abstractions for pieces, squares, moves
+- No premature optimization
+- Extensively tested
+
+### Phase 2: Move Generation (2 weeks)
+
+Implemented from scratch with correctness as primary goal:
+- Magic bitboards for sliding pieces
+- Proper castling, en passant, promotion
+- Perft testing at every step
+- Only optimized after correctness proven
+
+### Phase 3: Search & Evaluation (2 weeks)
+
+Clean alpha-beta implementation:
+- Simple, correct code first
+- Added features incrementally
+- Each addition tested thoroughly
+- Performance tuning only after correctness
+
+### Phase 4: Optimization (ongoing)
+
+With solid foundation, optimization became straightforward:
+- Profile to find hot paths
+- Optimize specific bottlenecks
+- Measure improvements
+- No premature optimization
+
+## What Made the Rewrite Succeed
+
+### 1. Learned from Mistakes
+
+I knew what problems to avoid:
+- Don't mix representation styles
+- Proper abstractions from the start
+- Test extensively before optimizing
+- Keep concerns separated
+
+### 2. Focused on Correctness First
+
+v1 prioritized "getting it working" which led to shortcuts and technical debt.
+
+v2 prioritized correctness, which paradoxically led to better performance (fewer bugs, simpler code that JIT can optimize).
+
+### 3. Better Design Upfront
+
+Having built v1, I understood the problem space better:
+- What components needed isolation
+- Where complexity actually lived
+- What abstractions were needed
+- What premature optimization to avoid
+
+### 4. Incremental Validation
+
+After each phase, extensive testing before moving forward:
+- Unit tests for core functions
+- Perft suites for move generation
+- Position tests for evaluation
+- Performance benchmarks
+
+## The Results
+
+### Performance
+
+- **v1**: ~8M nodes/sec with bugs
+- **v2**: 20-22M nodes/sec, correct
+
+The speed came from simpler code, not clever tricks.
+
+### Correctness
+
+- **v1**: Failed various perft suites, subtle bugs in edge cases
+- **v2**: Passes extensive perft suites, no known correctness issues
+
+### Maintainability
+
+- **v1**: Adding features meant fighting the architecture
+- **v2**: Adding features is straightforward
+
+### Development Speed
+
+After the initial rewrite investment, development is much faster. Adding new features or optimizations doesn't require untangling architectural issues.
+
+## When to Rewrite vs Refactor
+
+### Rewrite When:
+
+1. **Fundamental architectural issues** that can't be fixed incrementally
+2. **You've learned enough** that you'd design it completely differently
+3. **Refactoring costs more** than rewriting (time and complexity)
+4. **The codebase fights you** on every change
+5. **Bugs are systemic** rather than localized
+
+### Refactor When:
+
+1. **Architecture is sound**, just specific implementations are wrong
+2. **System is in production** and rewrite risk is too high
+3. **Team doesn't have deep understanding** yet
+4. **Changes are localized** and don't cascade
+5. **Time pressure** makes rewrite infeasible
+
+## Lessons Learned
+
+### 1. Sunk Cost Fallacy is Real
+
+Past time invested doesn't make bad code worth keeping. Judge based on future cost, not past investment.
+
+### 2. "Working" Isn't Enough
+
+Code that "works" but fights you on every change is technical debt that compounds.
+
+### 3. Sometimes Fast = Slow
+
+The "fast" path of patching v1 would have been slower long-term than the "slow" path of rewriting v2.
+
+### 4. Experience Compounds
+
+You can't write v2 without learning from v1. The rewrite embodied months of learning.
+
+### 5. Foundation Matters
+
+Solid architecture makes everything easier. Bad architecture makes everything harder. Time invested in foundation pays dividends forever.
+
+## The Hardest Part
+
+The hardest part wasn't writing the code. It was making the decision to throw away months of work.
+
+Once I decided, the rewrite felt liberating. No fighting against bad abstractions. Clean slate with clear design.
+
+## Would I Do It Again?
+
+**Absolutely.**
+
+The v2 codebase is:
+- Faster
+- More correct
+- More maintainable
+- Easier to extend
+- Actually pleasant to work with
+
+That's worth the time investment.
+
+## The Bottom Line
+
+**Don't be afraid to rewrite when the architecture is fundamentally wrong.**
+
+But make sure you're rewriting because you've learned, not just because you're bored with the current code.
+
+The test: "If I started from scratch today, would I design it completely differently?"
+
+If yes, rewrite.
+If no, refactor.
+
+---
+
+*"The current version is not 'v1 with patches' — it's a full rewrite with everything I learned the hard way baked in."*

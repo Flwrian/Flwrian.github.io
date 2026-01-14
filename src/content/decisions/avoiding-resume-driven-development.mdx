@@ -1,0 +1,297 @@
+---
+title: "Avoiding Resume-Driven Development"
+date: 2024-05-20
+context: "The industry pressures developers to constantly learn new frameworks and chase trends. Recruiters look for specific technologies. Peers talk about the latest JavaScript framework. But using technology because it's trendy rather than because it solves a problem leads to unnecessary complexity and technical debt."
+decision: "Only adopt technologies when they solve a real problem for a specific project, not to pad my resume or follow trends."
+alternatives:
+  - option: "Follow Industry Trends"
+    pros:
+      - "Resume looks current"
+      - "Easier to find jobs requiring trendy tech"
+      - "Conversations with peers easier"
+      - "Potential to learn genuinely useful tools"
+    cons:
+      - "Technology choices driven by market, not project needs"
+      - "Constant context-switching between frameworks"
+      - "Superficial knowledge of many things"
+      - "Projects more complex than necessary"
+  - option: "Deep Specialization"
+    pros:
+      - "Deep expertise in specific stack"
+      - "Efficient at solving problems in that domain"
+      - "Recognized expert status"
+    cons:
+      - "May miss genuinely better alternatives"
+      - "Risk of technology becoming obsolete"
+      - "Less flexible for different project types"
+reasoning: "Technology should be chosen based on project requirements, not what's trendy. Using React because everyone uses it, not because your project needs a complex frontend, adds unnecessary complexity. Good engineering means choosing appropriate tools, not impressive ones. I'd rather deeply understand a 'boring' technology than superficially know ten trendy ones. When I explore new tech, it's through deliberate learning projects, not by forcing it into production code."
+tags:
+  - "Philosophy"
+  - "Technology Choices"
+  - "Career"
+outcome: "This approach leads to simpler, more maintainable projects. My technology choices are defensible: 'We use X because Y', not 'We use X because it's popular'. I learn new technologies through dedicated exploration projects where I can understand them deeply. My portfolio shows versatility through problem-solving, not a laundry list of frameworks."
+---
+
+## The Pressure
+
+The software industry has a problem: **resume-driven development**.
+
+Developers choose technologies to look good on resumes rather than to solve problems. Teams adopt frameworks because they're trendy, not because they're appropriate.
+
+The conversation goes:
+- "Let's use Kubernetes!" 
+- "Why? We have three services."
+- "Because everyone uses Kubernetes."
+
+That's not engineering. That's fashion.
+
+## What I Mean By Resume-Driven Development
+
+**Resume-driven development** is choosing technologies based on:
+- What recruiters search for
+- What peers are talking about
+- What conference speakers advocate
+- What's getting GitHub stars
+- What looks impressive
+
+Instead of:
+- What solves the actual problem
+- What the team knows well
+- What's reliable and proven
+- What matches complexity to requirements
+- What's maintainable long-term
+
+## Examples I've Seen (And Avoided)
+
+### The Microservices Trap
+
+**Trend**: "Microservices are how real engineers build systems"
+
+**Reality**: Microservices solve specific problems (team scaling, independent deployment). They also create problems (distributed systems complexity, operational overhead).
+
+**What I do**: Start with a monolith. Split when there's a concrete reason (different scaling needs, team boundaries, deployment independence).
+
+### The Framework Treadmill
+
+**Trend**: New JavaScript framework every month
+
+**Reality**: Most projects don't need the complexity. Server-rendered pages with progressive enhancement work for many use cases.
+
+**What I do**: Use what's appropriate. Flask + Jinja templates worked great for Alemca. No need for React when server-side rendering solves it.
+
+### The NoSQL Hype
+
+**Trend**: "MongoDB is web-scale! Relational databases are legacy!"
+
+**Reality**: ACID guarantees matter. Relational data is relational. Most "scalability" problems aren't solved by NoSQL.
+
+**What I do**: PostgreSQL for relational data, InfluxDB for time-series, Redis for caching. Use the right tool for the data model.
+
+### The Container Everything
+
+**Trend**: "Everything must be containerized and orchestrated!"
+
+**Reality**: Containers add complexity. Orchestration adds more complexity. Sometimes a systemd service is enough.
+
+**What I do**: Use containers when isolation/reproducibility matters. Don't containerize for the sake of containerization.
+
+## How I Actually Choose Technology
+
+### 1. Understand the Problem
+
+Before choosing technology, understand what problem you're solving:
+- What are the actual requirements?
+- What are the real constraints?
+- What's the scale we're targeting?
+- What does the team know?
+
+### 2. Consider Boring Technology
+
+**Boring technology** is underrated:
+- PostgreSQL (still excellent after decades)
+- Linux (proven, stable, well-understood)
+- Nginx (fast, reliable, simple)
+- Python/Java (mature ecosystems)
+
+Boring doesn't mean bad. It means proven.
+
+### 3. Choose Based on Fit
+
+Does the technology:
+- ✅ Solve the actual problem?
+- ✅ Match team expertise?
+- ✅ Have good documentation?
+- ✅ Have a stable ecosystem?
+- ✅ Match project complexity?
+
+If "yes" to most, it's probably good. If "yes" only to "is it trendy?", reconsider.
+
+### 4. Explore Through Side Projects
+
+Want to learn a new technology? **Build a side project.**
+
+Don't learn Rust by rewriting production services. Learn Rust by building a toy project where failure is okay.
+
+Then, if it fits a real need, you understand it well enough to use it properly.
+
+## My Technology Principles
+
+### Principle 1: Appropriate Over Impressive
+
+**Impressive**: "Our startup uses Kubernetes, microservices, GraphQL, and serverless!"
+
+**Appropriate**: "We use a monolith deployed on a VM because we're three people and that's what we can maintain."
+
+Appropriate technology scales with team size, problem complexity, and operational capacity.
+
+### Principle 2: Deep Over Broad
+
+**Broad**: "I've used 20 JavaScript frameworks"
+
+**Deep**: "I understand JVM optimization, garbage collection, and can debug performance issues systematically"
+
+Deep knowledge transfers. Superficial framework knowledge doesn't.
+
+### Principle 3: Proven Over Novel
+
+**Novel**: "Let's use this framework released last month!"
+
+**Proven**: "Let's use this technology with 10 years of production use and extensive documentation"
+
+Novel technology might be better. But it also might have subtle bugs, breaking changes, or disappear entirely.
+
+Proven technology has been battle-tested.
+
+### Principle 4: Simple Over Complex
+
+**Complex**: "Let's build an event-driven microservices architecture with CQRS and event sourcing!"
+
+**Simple**: "Let's build a web app with a database and background jobs."
+
+Complex architectures solve complex problems. Most problems aren't that complex.
+
+## How This Affects My Work
+
+### At Alemca
+
+Chose **Flask + Jinja + PostgreSQL + InfluxDB + S3**:
+- Flask: Team knew Python, didn't need React complexity
+- Jinja: Server-rendered pages with fast initial load
+- PostgreSQL: Relational data is relational
+- InfluxDB: Purpose-built for time-series data
+- S3: Industry-standard object storage
+
+No trendy choices. All defensible. System worked reliably.
+
+### For Aspira
+
+Chose **Java**:
+- I know Java deeply
+- JVM is sophisticated enough for good performance
+- Memory safety helps with complex state management
+- Focus on algorithms, not language complexity
+
+Not trendy (C++ dominates chess engines). But right choice for my goals.
+
+### For PawnPower
+
+Chose **Python + WebSocket + REST**:
+- Python: Fast development for distributed coordination
+- WebSocket: Real-time communication requirement
+- REST: Simple API for worker registration
+
+Standard choices that worked. No need for complexity.
+
+## When to Adopt New Technology
+
+I **do** explore new technologies. But deliberately:
+
+### Through Side Projects
+
+Example: **File system in Java**
+- Goal: Understand how file systems work
+- Outcome: Deep understanding of I/O, persistence, data structures
+- Application: Better decisions when working with files in production code
+
+### When It Solves Real Problems
+
+Example: **InfluxDB at Alemca**
+- Problem: Time-series data for IoT sensors
+- Requirement: Efficient storage, fast queries, retention policies
+- Evaluation: InfluxDB purpose-built for this
+- Decision: Adopt because it solves the specific problem
+
+### When You Can Afford the Risk
+
+New technology has risk:
+- Bugs not discovered yet
+- Breaking changes
+- Documentation gaps
+- Smaller community
+
+Only acceptable when you can handle that risk.
+
+## What This Looks Like on a Resume
+
+My resume doesn't list 50 technologies. It shows:
+
+**Deep expertise**: Java, Python, distributed systems, system architecture
+
+**Proven projects**: Aspira (complex problem solved well), Alemca (production system), PawnPower (distributed systems)
+
+**Thoughtful decisions**: Technology choices documented with reasoning
+
+**Versatility through fundamentals**: Can learn any technology because I understand principles
+
+## The Pushback
+
+**"But recruiters filter by keyword!"**
+
+Some do. But good companies look deeper. They want engineers who **solve problems**, not engineers who've touched every framework.
+
+If a company only cares about keyword matching, that's a signal about their engineering culture.
+
+**"You'll fall behind!"**
+
+Understanding fundamentals doesn't become obsolete. Frameworks come and go. Principles remain.
+
+I can learn a new framework in a week. I can't learn distributed systems in a week.
+
+**"You won't get interviews!"**
+
+My interviews come from:
+- Projects that demonstrate competence
+- Clear explanations of technical decisions
+- Understanding of trade-offs and architecture
+- Demonstrated ability to learn
+
+Not from having React on my resume.
+
+## The Long Game
+
+Resume-driven development optimizes for:
+- Short-term job hunting
+- Looking current
+- Following trends
+
+Problem-driven development optimizes for:
+- Building good systems
+- Deep understanding
+- Long-term career growth
+
+I'm playing the long game.
+
+## Bottom Line
+
+**Use technology because it solves your problem, not because it's trendy.**
+
+- Boring technology is underrated
+- Deep knowledge beats broad superficiality
+- Simple solutions beat complex ones
+- Your resume should show thinking, not keywords
+
+Choose tools like an engineer, not like a marketer.
+
+---
+
+*"I refuse to use new or hyped technologies just because they're new or hyped. If they have clear value for the project, great. But working on a technology just to work on it causes many problems."*

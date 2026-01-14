@@ -37,7 +37,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SEO from '../components/SEO.astro';
 import StructuredData from '../components/StructuredData.astro';
 import ForwardLink from '../components/ForwardLink.astro';
-import Testimonials from '../components/Testimonials.astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../config';
 
@@ -93,11 +92,11 @@ const recentDecisions = allDecisions
         <!-- Left: Value Statement -->
         <div class="hero-left">
           <h1 class="hero-title">
-            I don't just ship projects.<br/>
-            <span class="hero-title-emphasis">I document decisions, trade-offs, and outcomes.</span>
+            I build systems that work.<br/>
+            <span class="hero-title-emphasis">And I deeply understand how and why they work.</span>
           </h1>
           <p class="hero-sub">
-            A portfolio built around case studies — not screenshots.
+            From chess engines processing 20M+ nodes/second to distributed IoT platforms — I solve complex problems through curiosity and careful design.
           </p>
           <p class="hero-meta">
             {siteConfig.author.name} · {siteConfig.author.title}
@@ -126,10 +125,10 @@ const recentDecisions = allDecisions
     <!-- Introduction -->
     <section class="introduction">
       <p>
-        I'm {siteConfig.author.name}, {siteConfig.author.title.toLowerCase()} focused on building systems that move real business metrics.
+        I'm {siteConfig.author.name}, a software engineer who values clarity and quality above all else. I primarily code in Java, but I love exploring new technologies through hands-on projects that help me understand how things really work.
       </p>
       <p>
-        Every major decision is documented—because great engineers don't just build things, they explain why.
+        Before being a Java developer, I'm someone curious who researches. I learn every day and I love it. I'm passionate about understanding how everything around us works, and I love creating projects that help me discover how things function.
       </p>
       <ForwardLink href="/journey" text="Read my journey" variant="muted" />
     </section>
@@ -160,14 +159,11 @@ const recentDecisions = allDecisions
       )}
     </section>
 
-    <!-- Testimonials -->
-    <Testimonials limit={3} />
-
     <!-- What I Think About -->
     <section class="thinking">
       <h2>Problems I Enjoy Solving</h2>
       <p class="thinking-list">
-        How to scale systems without scaling complexity · When to choose consistency over availability · Making legacy codebases maintainable · Designing APIs that last · Building teams that ship · Turning technical debt into technical investment · Documenting decisions so future-you understands past-you
+        How to architect scalable systems · Building performance-critical code that's still maintainable · Making thoughtful technical decisions with clear trade-offs · Understanding how things work by building them from scratch · Identifying and fixing subtle bugs in complex systems · Balancing clean code with pragmatic delivery · Designing APIs and architectures that last · Exploring distributed systems and coordination challenges
       </p>
     </section>
 
@@ -175,7 +171,7 @@ const recentDecisions = allDecisions
     <section class="cta">
       <h2>Let's Work Together</h2>
       <p>
-        Looking for technical leadership, architectural guidance, or someone who documents their thinking? Let's talk.
+        I'm looking for a project that challenges me technically, where I can apply clean code principles, thoughtful architecture, and systematic analysis to solve complex problems.
       </p>
       <div class="cta-buttons">
         <a href="/projects" class="btn-primary">View My Work</a>

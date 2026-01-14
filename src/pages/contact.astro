@@ -58,7 +58,8 @@ const socialLinks = Object.entries(siteConfig.social)
         {siteConfig.author.email}
       </a>
       <p class="context">
-        I read every email. Expect a reply within a few days.
+        I read every email. Expect a reply within a few days.<br/>
+        <span class="email-note">(Yes, it's an old email. No, I'm not changing it. It has character.)</span>
       </p>
     </section>
 
@@ -118,6 +119,13 @@ const socialLinks = Object.entries(siteConfig.social)
       font-size: 1rem;
       color: var(--color-text-muted);
       line-height: 1.6;
+    }
+
+    .email-note {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      opacity: 0.7;
+      font-style: italic;
     }
 
     .secondary-zone {

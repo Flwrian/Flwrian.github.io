@@ -1,0 +1,131 @@
+---
+title: "Alemca - IoT Remote Management Platform"
+role: "Full-Stack Developer & Technical Lead"
+year: 2024
+duration: "1.5 years"
+teamSize: 5
+outcomeSummary: "Architected and developed scalable data and file management solutions for B2B IoT platform managing everything from solar farms to connected badges. Led architectural decisions, designed APIs, and implemented Zero Trust security architecture."
+overview: "Alemca is a B2B platform that simplifies remote system management - from solar power plants to simple connected badges. The platform handles secure access, real-time monitoring, traceability, and centralized management of IoT devices at scale."
+problem: "Managing distributed IoT systems securely is complex. Clients need to remotely access heterogeneous devices, monitor them in real-time, maintain security through Zero Trust architecture, ensure complete traceability of all actions, and scale to thousands of concurrent devices. Traditional approaches don't handle the variety and scale of devices Alemca supports."
+constraints:
+  - "Must support widely different device types (from solar plants to badges)"
+  - "Zero Trust security architecture requirement"
+  - "Real-time monitoring and alerting needed"
+  - "Complete audit trail for compliance"
+  - "B2B clients expect 99.9%+ uptime"
+  - "Temporary access delegation with automatic expiration"
+approach: "Started by renovating the existing web app to add essential features for users. Once the foundation was solid, focused on building two critical components: a data pole for time-series metrics and a file pole for document management. Both needed to be scalable, efficient, and integrate seamlessly with existing backends and future client projects."
+keyDecisions:
+  - decision: "InfluxDB for time-series data storage"
+    reasoning: "Purpose-built for IoT metrics with excellent compression, query performance for time-series data, and built-in retention policies. Critical for handling millions of data points from distributed sensors."
+    alternatives:
+      - "PostgreSQL with TimescaleDB (more complex, less optimized for pure time-series)"
+      - "MongoDB (poor time-series performance, larger storage footprint)"
+  - decision: "S3-compatible storage for file management"
+    reasoning: "Industry-standard object storage with excellent scalability, durability guarantees, and straightforward pricing model. Allows flexibility to use AWS S3, MinIO, or other compatible providers."
+    alternatives:
+      - "Traditional file system (doesn't scale horizontally)"
+      - "Database blob storage (expensive, poor performance at scale)"
+  - decision: "Flask framework with Jinja templates"
+    reasoning: "Lightweight, flexible framework that matched team expertise. Jinja templates provided server-side rendering for fast initial loads while allowing progressive enhancement."
+    alternatives:
+      - "Django (too heavy for our needs)"
+      - "React SPA (unnecessary complexity for our use case)"
+  - decision: "Zero Trust network architecture"
+    reasoning: "Critical for B2B IoT security. Network segmentation with strong authentication (2FA) ensures compromised devices don't cascade. Aligns with enterprise security requirements."
+    alternatives:
+      - "Perimeter-based security (inadequate for distributed IoT)"
+techStack:
+  - "Python"
+  - "Flask"
+  - "Jinja2 Templates"
+  - "InfluxDB"
+  - "S3-compatible Storage"
+  - "PostgreSQL"
+  - "2FA Authentication"
+  - "Zero Trust Architecture"
+impact:
+  metrics:
+    - label: "System Uptime"
+      value: "99.9%+"
+    - label: "Devices Managed"
+      value: "Thousands"
+    - label: "Data Points Processed"
+      value: "Millions daily"
+  qualitative: "Built scalable infrastructure that became the foundation for client integrations. The data and file poles I architected handle real-time monitoring and document management for diverse IoT deployments. Led architectural decisions that balanced immediate needs with future scalability, implementing solutions that are both performant and maintainable. Strengthened skills in system security, distributed systems, and making technical decisions with business impact in mind."
+learnings:
+  - "Architectural decisions have long-term consequences - take time to analyze and design properly"
+  - "Security must be built in from the start, not added later"
+  - "Scalability requires thinking beyond current requirements"
+  - "API design is critical when multiple services need to integrate"
+  - "Technical debt trade-offs: knowing when to refactor vs. when to ship"
+  - "Managing distributed systems requires robust monitoring and alerting"
+featured: true
+status: "completed"
+order: 2
+relatedDecisions:
+  - "choosing-influxdb-timeseries"
+  - "zero-trust-architecture"
+---
+
+## Core Responsibilities
+
+### Initial Web App Renovation
+
+Rebuilt the user-facing web application to extend functionality:
+- **Frontend & Backend**: Flask with Jinja templates
+- **Feature Development**: Added critical user-requested features
+- **Foundation Building**: Established solid base for future development
+
+### Data Pole Architecture
+
+Designed and implemented scalable time-series data management:
+- **Technology**: InfluxDB for optimal time-series storage and querying
+- **Integration**: Connected multiple services for unified data collection
+- **API Design**: Built scalable API serving both internal backends and client projects
+- **Real-time Processing**: Handled millions of data points from distributed sensors
+
+### File Pole Architecture
+
+Created robust document and file management system:
+- **Storage**: S3-compatible object storage for scalability
+- **Access Control**: Secure file access with granular permissions
+- **API Design**: RESTful API for file upload, retrieval, and management
+- **Integration**: Seamless connection with other platform components
+
+## Security Architecture
+
+Implemented comprehensive Zero Trust security model:
+
+- **Network Segmentation**: Isolated device networks prevent lateral movement
+- **Strong Authentication**: 2FA for all user access
+- **Temporary Access Delegation**: Time-limited permissions with automatic expiration
+- **Complete Audit Trail**: All actions and remote access logged for compliance
+- **Proactive Monitoring**: Real-time security incident detection and alerting
+
+## Technical Impact
+
+The architecture I designed handles:
+- Real-time monitoring of heterogeneous IoT devices
+- Secure remote access to distributed systems
+- Centralized management of device configurations
+- Automatic security updates across device fleet
+- Complete traceability for regulatory compliance
+
+## What Made This Challenging
+
+Working on IoT at scale requires balancing multiple concerns:
+- **Security**: Every device is a potential attack vector
+- **Heterogeneity**: Devices have different capabilities, protocols, interfaces
+- **Scale**: Architecture must handle 10x growth without redesign
+- **Reliability**: Downtime affects physical systems (solar plants, access control)
+- **Complexity**: Multiple services must work together seamlessly
+
+## Key Takeaways
+
+This project taught me to:
+1. **Think architecturally first**: Good design prevents problems, refactoring fixes them
+2. **Choose boring technology**: InfluxDB and S3 are proven, reliable, and well-understood
+3. **Security is not optional**: Zero Trust architecture is complex but necessary
+4. **APIs are contracts**: Design them carefully - they're hard to change
+5. **Monitor everything**: Proactive monitoring prevents outages

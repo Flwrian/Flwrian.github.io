@@ -63,9 +63,9 @@ export const pagesConfig = {
    */
   projects: {
     title: 'Projects - Case Studies',
-    description: 'Detailed case studies showcasing problem-solving approach, technical decisions, and measurable impact across various engineering projects.',
+    description: 'From chess engines to IoT platforms - detailed case studies showcasing technical problem-solving, architectural decisions, and real-world impact.',
     heading: 'Projects',
-    intro: 'Case studies that demonstrate how I approach complex problems, make technical decisions, and deliver measurable impact. Each project tells the story of the challenge, the constraints, the decisions made, and the outcomes achieved.',
+    intro: 'I build to understand. Each project here represents a deep dive into a problem space - whether it\'s chess engine optimization, distributed systems, or scalable IoT platforms. These case studies document the challenges, technical decisions, and lessons learned.',
   },
   
   /**
@@ -82,20 +82,20 @@ export const pagesConfig = {
    * Journey timeline page (/journey)
    */
   journey: {
-    title: 'Journey - Career Growth & Learning Timeline',
-    description: 'A chronological timeline of my professional journey, highlighting key milestones, learning moments, and career transitions that shaped my growth as an engineer.',
+    title: 'Journey - Learning Through Building',
+    description: 'My path from technical high school to software engineer - a story of curiosity, deliberate learning, and understanding systems through hands-on exploration.',
     heading: 'Journey',
-    intro: 'A timeline of my professional growth and learning progression. This isn\'t a resume—it\'s a story of how I\'ve evolved as an engineer, the pivotal moments that shaped my thinking, and the skills I\'ve developed along the way.',
+    intro: 'My career is driven by curiosity. From learning fundamentals at a technical high school in Lodève, through university in Montpellier, to building production systems at Alemca and personal projects like Aspira - each step built on deep understanding through hands-on experience.',
   },
   
   /**
    * Writing/blog listing page (/writing)
    */
   writing: {
-    title: 'Writing - Technical Articles & Insights',
-    description: 'Technical articles, insights, and lessons learned from building software systems and solving engineering challenges.',
+    title: 'Writing - Technical Insights & Philosophy',
+    description: 'Articles about software engineering, code quality, debugging, learning strategies, and the philosophy behind building reliable systems.',
     heading: 'Writing',
-    intro: 'Technical articles, insights, and lessons learned from building software systems. I write about architecture decisions, engineering practices, and the challenges of delivering reliable software at scale.',
+    intro: 'I write about what I learn. From debugging complex systems to understanding why clean code matters, these articles capture insights from building software and thinking deeply about engineering practices.',
   },
 
   /**
@@ -112,10 +112,10 @@ export const pagesConfig = {
    * Uses/tools page (/uses)
    */
   uses: {
-    title: 'Uses - Tools, Stack & Environment',
-    description: 'A comprehensive list of the tools, technologies, and environment I use for development work.',
+    title: 'Uses - Development Setup & Philosophy',
+    description: 'My development tools, homelab setup, and philosophy on choosing technology - favoring proven solutions over hype.',
     heading: 'Uses',
-    intro: 'A transparent look at the tools, technologies, and environment that power my development workflow. This page documents what I use and why, helping other engineers discover useful tools and understand my technical context.',
+    intro: 'I focus on depth over breadth. You\'ll see only Java and Python in my tech stack - not because I don\'t know other languages, but because I believe in true expertise over resume padding. I know C, JavaScript, and others well enough, but mastering two languages beats being mediocre in ten. My setup includes a homelab server for development, standard tooling that works reliably, and a philosophy of choosing technology based on actual needs rather than trends.',
   },
   
   /**

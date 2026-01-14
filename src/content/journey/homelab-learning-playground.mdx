@@ -1,0 +1,320 @@
+---
+title: "Homelab: My Personal Cloud and Learning Playground"
+date: 2024-09-10
+type: "milestone"
+description: "Why I replaced my desktop PC with a server and turned it into a homelab for hosting projects, learning infrastructure, and understanding distributed systems."
+skills:
+  - "Infrastructure"
+  - "Linux Administration"
+  - "Virtualization"
+  - "DevOps"
+  - "Networking"
+---
+
+## The Problem
+
+I had a perfectly functional desktop PC. It worked fine for development. But I kept running into issues:
+
+- Projects conflicting with each other
+- "Works on my machine" problems
+- Wanting to access projects from anywhere
+- Curious about server infrastructure
+- Paying for cloud hosting for hobby projects
+
+## The Solution: Replace Desktop with Server
+
+I did something that sounds extreme: **replaced my desktop PC with a server**.
+
+Not a secondary machine. Not in addition to my desktop. *Instead of* my desktop.
+
+This server became my:
+- Development environment
+- Project hosting platform
+- Learning laboratory
+- Personal cloud
+
+## Why This Made Sense
+
+### 1. Always Accessible
+
+SSH from anywhere. On laptop, on another computer, on mobile (if desperate). My development environment follows me.
+
+No more "I forgot that file on my home computer".
+
+### 2. Isolation Through VMs
+
+Different projects in different VMs:
+- No dependency conflicts
+- Clean separation of concerns
+- Easy to reset if something breaks
+- Can experiment without fear
+
+Broke something in a VM? Snapshot restore. No harm done.
+
+### 3. Learning by Doing
+
+Want to understand:
+- Virtualization? Set up KVM/Proxmox
+- Networking? Configure VLANs and routing
+- Storage? RAID arrays and ZFS
+- Containers? Docker and orchestration
+- Monitoring? Grafana and metrics collection
+
+**Building a homelab teaches all of this through hands-on experience.**
+
+### 4. Cost Savings
+
+Cloud hosting costs for hobby projects add up:
+- VPS: $10-20/month
+- Storage: $5-10/month
+- Bandwidth: Can get expensive
+
+Homelab:
+- One-time hardware cost
+- Electricity (minimal for efficient server)
+- Full control over everything
+
+After a year, it pays for itself.
+
+### 5. Project Hosting
+
+Host my own:
+- Web applications
+- APIs
+- Databases
+- Git repositories
+- CI/CD pipelines
+- File storage
+
+No monthly bills. No vendor lock-in. Complete control.
+
+## What I Run
+
+### Infrastructure
+
+**Virtualization**: KVM or Proxmox for VM management
+
+**Containers**: Docker for application isolation
+
+**Reverse Proxy**: Nginx for routing traffic
+
+**DNS**: Local DNS for easy service discovery
+
+### Services
+
+**Development**:
+- Multiple VMs for different project environments
+- Docker containers for databases and dependencies
+- Git server for private repositories
+
+**Hosting**:
+- Web applications (Flask apps, APIs)
+- Databases (PostgreSQL, Redis, InfluxDB)
+- File storage (S3-compatible)
+
+**Monitoring**:
+- Grafana for metrics visualization
+- Custom dashboards for system health
+- Log aggregation
+
+**Backup**:
+- Automated nightly backups
+- 3-2-1 backup strategy
+- Test restores regularly
+
+## What I Learned
+
+### System Administration
+
+- Linux server administration
+- User and permission management
+- Service management (systemd)
+- Security hardening
+
+### Networking
+
+- TCP/IP fundamentals
+- Routing and switching
+- VLANs and network segmentation
+- Firewall configuration
+- VPN setup for remote access
+
+### Virtualization
+
+- Hypervisor architecture
+- Resource allocation
+- VM networking
+- Snapshot management
+- Performance tuning
+
+### Storage
+
+- RAID configurations
+- File systems (ext4, ZFS, etc.)
+- Backup strategies
+- Disaster recovery planning
+
+### Monitoring
+
+- Metrics collection
+- Alerting strategies
+- Log management
+- Performance analysis
+
+## Challenges
+
+### 1. Complexity
+
+Running your own infrastructure is more complex than using managed services. You're responsible for:
+- Updates and security patches
+- Monitoring and alerting
+- Backup and recovery
+- Performance optimization
+
+**But**: This complexity is educational. Every problem solved is knowledge gained.
+
+### 2. Reliability
+
+Home internet isn't datacenter-grade:
+- Power outages happen
+- ISP issues occur
+- Hardware can fail
+
+**Solution**: 
+- UPS for power protection
+- Good backup strategy
+- Accept that 99.9% uptime isn't the goal
+
+### 3. Initial Time Investment
+
+Setting up a homelab takes time:
+- Hardware selection
+- OS installation and configuration
+- Service setup
+- Learning curve
+
+**But**: The time invested pays off in knowledge and capability.
+
+## Is This For Everyone?
+
+**No.**
+
+Don't build a homelab if:
+- You just want to write code (use managed services)
+- You don't enjoy infrastructure
+- You need guaranteed uptime
+- You don't have time for maintenance
+
+**Do** build a homelab if:
+- You're curious about how infrastructure works
+- You enjoy learning by doing
+- You want full control over your environment
+- You see value in hands-on experience
+
+## What This Taught Me
+
+### 1. Appreciation for Managed Services
+
+Running your own infrastructure makes you appreciate:
+- How much work cloud providers do
+- Why managed services cost what they do
+- The value of proper monitoring and alerting
+
+But also: when DIY makes sense vs when to pay for services.
+
+### 2. Systems Thinking
+
+Understanding infrastructure deepens your understanding of applications:
+- How networking affects performance
+- Why certain architectures scale better
+- What operational concerns matter
+- How monitoring helps debugging
+
+### 3. Troubleshooting Skills
+
+When something breaks (and it will), you learn:
+- Systematic debugging
+- Reading logs effectively
+- Understanding system behavior
+- Fixing problems at the root
+
+### 4. Confidence
+
+There's confidence that comes from:
+- Knowing you can set up production-like environments
+- Understanding the full stack (application to hardware)
+- Being able to deploy and manage services
+- Not being dependent on specific platforms
+
+## Practical Benefits
+
+### For Development
+
+- Consistent environment across projects
+- No "works on my machine" issues
+- Can experiment freely
+- Easy rollback if things break
+
+### For Learning
+
+- Hands-on experience with real infrastructure
+- Safe environment to break things
+- Learn by doing, not just reading
+- Build transferable skills
+
+### For Projects
+
+- Host hobby projects for free
+- Full control over stack
+- No vendor lock-in
+- Learn deployment and operations
+
+## Current Projects Hosted
+
+- **Aspira development environment**: Dedicated VM with performance monitoring
+- **Web applications**: Flask apps for various projects
+- **Databases**: PostgreSQL, InfluxDB, Redis instances
+- **Git repositories**: Private repos for personal projects
+- **CI/CD**: Automated build and test pipelines
+- **File storage**: S3-compatible object storage
+- **Monitoring dashboards**: System health and project metrics
+
+## The Bottom Line
+
+Replacing my desktop with a server homelab wasn't just about hardware:
+
+**It was about learning by doing.**
+
+Every project I host teaches me something:
+- How to deploy properly
+- How to monitor effectively
+- How to debug in production
+- How to think operationally
+
+I'm not just a developer writing code. I'm someone who understands the full stack from application to infrastructure.
+
+That understanding makes me a better engineer.
+
+## Would I Recommend It?
+
+**If you're curious about infrastructure: absolutely yes.**
+
+Start small:
+1. Get modest server hardware
+2. Install Linux
+3. Set up a few VMs
+4. Host a simple project
+5. Add monitoring
+6. Iterate and learn
+
+You don't need enterprise hardware. You need curiosity and willingness to learn.
+
+**If you just want to code: maybe not.**
+
+Use managed services. Focus on applications. That's totally valid.
+
+But if you want to understand how systems work end-to-end, building a homelab is one of the best investments you can make.
+
+---
+
+*"I'm a good dev and at the same time someone who knows how to build complex systems. I replaced my old PC with a server for a homelab that currently serves me to host projects and acts as my 'Cloud Computing'."*

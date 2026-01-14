@@ -1,0 +1,182 @@
+---
+title: "PawnPower - Chess Engine Testing Platform"
+role: "Creator & Architect"
+year: 2024
+duration: "4 months"
+teamSize: 1
+outcomeSummary: "Built automated chess engine testing platform with distributed worker system, real-time metrics analysis, and cross-platform support. Later replaced by OpenBench, but provided deep learning in distributed systems and network security."
+overview: "PawnPower was a comprehensive platform for training, testing, analyzing chess games, and benchmarking chess engine Elo ratings through an automated pipeline. It featured synchronized worker systems, real-time metrics analysis, network health monitoring, and plug-and-play worker installation for both Linux and Windows."
+problem: "Testing chess engines rigorously requires thousands of games played at various time controls. Manual testing is impractical. Existing solutions at the time didn't provide the full pipeline I needed: automated game playing, Elo calculation, real-time monitoring, and easy worker deployment across different operating systems."
+constraints:
+  - "Workers must run on heterogeneous hardware (different CPUs, OSes)"
+  - "Network reliability issues - workers can disconnect"
+  - "Game results must be accurate and tamper-proof"
+  - "Real-time metrics needed for monitoring progress"
+  - "Easy deployment critical for scaling worker pool"
+  - "WebSocket connections for real-time updates"
+approach: "Designed a distributed architecture with central coordination server and autonomous workers. Workers pull tasks, play games locally, report results. WebSocket connections provide real-time updates. Focused on reliability, security, and ease of deployment."
+keyDecisions:
+  - decision: "Distributed worker architecture with task queue"
+    reasoning: "Allows scaling horizontally across any number of machines. Workers are stateless and can be added/removed dynamically. Central server manages work distribution and result aggregation."
+    alternatives:
+      - "Centralized game playing (doesn't scale, single point of failure)"
+      - "P2P architecture (complex coordination, difficult to secure)"
+  - decision: "WebSocket for real-time metrics"
+    reasoning: "Provides low-latency bidirectional communication for live updates. Essential for monitoring distributed worker health and game progress."
+    alternatives:
+      - "HTTP polling (inefficient, higher latency)"
+      - "Server-sent events (one-way only)"
+  - decision: "Cross-platform worker deployment"
+    reasoning: "Chess engine testing benefits from diverse hardware. Supporting both Linux and Windows maximizes available compute resources."
+    alternatives:
+      - "Docker-only deployment (easier but limits hardware access)"
+  - decision: "Automated Elo calculation pipeline"
+    reasoning: "Manual Elo tracking is error-prone and slow. Automated pipeline ensures consistency and provides immediate feedback on engine changes."
+    alternatives:
+      - "Manual calculation (too slow for rapid iteration)"
+      - "Third-party services (dependency risk, less control)"
+techStack:
+  - "Python"
+  - "WebSocket"
+  - "REST API"
+  - "UCI Protocol"
+  - "Elo Rating System"
+  - "Distributed Task Queue"
+  - "Real-time Metrics"
+  - "Cross-platform Deployment"
+impact:
+  metrics:
+    - label: "Games Automated"
+      value: "Thousands"
+    - label: "Platform Support"
+      value: "Linux + Windows"
+    - label: "Worker Deployment"
+      value: "Plug-and-play"
+  qualitative: "Though eventually replaced by OpenBench (Used by many engine developers, including Stockfish, the #1 engine in the world), PawnPower was an invaluable learning experience. It taught me distributed system design, worker synchronization, network reliability, real-time communication, and security in distributed environments. The challenges of coordinating multiple machines, handling failures gracefully, and ensuring result integrity prepared me for building robust production systems."
+learnings:
+  - "Distributed systems fail in interesting ways - design for failure from the start"
+  - "Real-time metrics are critical for debugging distributed issues"
+  - "Worker health monitoring is as important as task execution"
+  - "Cross-platform support multiplies complexity - plan carefully"
+  - "Security in distributed systems requires multiple layers"
+  - "Automated testing infrastructure is critical for rapid iteration"
+  - "Sometimes being replaced by production-grade solution is validation of the problem space"
+featured: false
+status: "archived"
+order: 3
+relatedProjects:
+  - "aspira-chess-engine"
+relatedDecisions:
+  - "distributed-worker-architecture"
+---
+
+## System Architecture
+
+### Core Components
+
+**Coordination Server**
+- Task queue management and distribution
+- Result aggregation and Elo calculation
+- Real-time metrics dashboard
+- Worker health monitoring
+- WebSocket connection management
+
+**Worker Nodes**
+- Pull tasks from central server
+- Run chess engines via UCI protocol
+- Play games autonomously
+- Report results back to server
+- Auto-reconnect on network issues
+
+**API Layer**
+- REST API for engine uploads
+- WebSocket API for real-time updates
+- Authentication and authorization
+- Rate limiting and security
+
+### Worker Features
+
+**Plug-and-Play Installation**
+- Automated setup scripts for Linux and Windows
+- Dependency management
+- Configuration through environment variables
+- One-command deployment
+
+**Reliability**
+- Automatic reconnection on network failures
+- Task resumption after crashes
+- Health check reporting
+- Graceful shutdown handling
+
+**Security**
+- Secure worker authentication
+- Result verification and integrity checks
+- Isolated execution environments
+- Network traffic encryption
+
+## Technical Challenges
+
+### Distributed Coordination
+
+Managing multiple workers across networks required:
+- Robust task distribution to prevent duplicate work
+- Result deduplication and consistency checks
+- Handling partial failures gracefully
+- Worker state management
+
+### Real-Time Metrics
+
+Built comprehensive monitoring system:
+- Live game progress updates via WebSocket
+- Network health visualization
+- Worker status dashboard
+- Elo progression tracking
+- Performance metrics (games/hour per worker)
+
+### Cross-Platform Support
+
+Supporting both Linux and Windows introduced complexity:
+- Different path conventions
+- Process management differences
+- Dependency installation variations
+- Testing across both platforms
+
+## Why This Project Matters
+
+Even though PawnPower was replaced by OpenBench, it was a critical learning project:
+
+1. **Distributed Systems Experience**: Learned coordination, failure handling, and scaling
+2. **Real-World Problem Solving**: Built solution for actual need in chess engine development
+3. **Security Awareness**: Implemented multiple security layers for distributed environment
+4. **System Design**: Practiced architectural decision-making with real constraints
+5. **Production Quality**: Built something reliable enough to use daily
+
+## Transition to OpenBench
+
+PawnPower was eventually replaced by OpenBench, the official testing framework used by Stockfish (the world's #1 chess engine). This transition happened because:
+
+- OpenBench is battle-tested with years of production use
+- Massive existing worker pool (thousands of contributors)
+- More sophisticated statistical models
+- Official community support
+
+Rather than seeing this as failure, it validated that:
+- The problem I was solving was real and important
+- My architectural approach was sound (similar to OpenBench's design)
+- Building production-grade testing infrastructure is valuable engineering
+
+## Key Takeaways
+
+**What I Built**
+- Distributed worker coordination system
+- Real-time WebSocket communication
+- Cross-platform deployment automation
+- Automated testing pipeline
+- Security for distributed environments
+
+**What I Learned**
+- Distributed systems are hard - design for failure
+- Real-time monitoring is essential for debugging
+- Cross-platform support requires careful planning
+- Security must be multi-layered
+- Sometimes the goal is learning, not production use
