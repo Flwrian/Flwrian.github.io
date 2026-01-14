@@ -66,27 +66,31 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
         working-directory: ${{ env.BUILD_PATH }}
+      - name: Create .env file
+        run: |
+          cat > .env << EOF
+          SITE_URL=https://flwrian.github.io
+          SITE_LANGUAGE=en
+          SITE_AUTHOR_NAME=Florian
+          SITE_AUTHOR_TITLE=Software Engineer & System Architect
+          SITE_AUTHOR_BIO=Curious software engineer who values clarity and quality. I build scalable systems, make thoughtful architectural decisions, and love exploring how things work under the hood.
+          SITE_AUTHOR_EMAIL=floflomontage@gmail.com
+          SITE_AUTHOR_LOCATION=Montpellier, France
+          SOCIAL_GITHUB=https://github.com/flwrian
+          SOCIAL_LINKEDIN=https://fr.linkedin.com/in/florian-montourcy
+          SOCIAL_TWITTER=
+          SOCIAL_MASTODON=
+          SOCIAL_BLUESKY=
+          SITE_TITLE=Florian - Software Engineer
+          SITE_DESCRIPTION=Software engineer specializing in Java, system architecture, and building performant solutions. I explore technology through hands-on projects and value clean code over hype.
+          EOF
+        working-directory: ${{ env.BUILD_PATH }}
       - name: Build with Astro
         run: |
           ${{ steps.detect-package-manager.outputs.runner }} astro build \
             --site "${{ steps.pages.outputs.origin }}" \
             --base "${{ steps.pages.outputs.base_path }}"
         working-directory: ${{ env.BUILD_PATH }}
-        env:
-          SITE_URL: https://flwrian.github.io
-          SITE_LANGUAGE: en
-          SITE_AUTHOR_NAME: Florian
-          SITE_AUTHOR_TITLE: Software Engineer & System Architect
-          SITE_AUTHOR_BIO: Curious software engineer who values clarity and quality. I build scalable systems, make thoughtful architectural decisions, and love exploring how things work under the hood.
-          SITE_AUTHOR_EMAIL: floflomontage@gmail.com
-          SITE_AUTHOR_LOCATION: Montpellier, France
-          SOCIAL_GITHUB: https://github.com/flwrian
-          SOCIAL_LINKEDIN: https://fr.linkedin.com/in/florian-montourcy
-          SOCIAL_TWITTER: ""
-          SOCIAL_MASTODON: ""
-          SOCIAL_BLUESKY: ""
-          SITE_TITLE: Florian - Software Engineer
-          SITE_DESCRIPTION: Software engineer specializing in Java, system architecture, and building performant solutions. I explore technology through hands-on projects and value clean code over hype.
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
