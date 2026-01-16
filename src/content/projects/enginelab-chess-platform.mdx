@@ -5,8 +5,8 @@ year: 2026
 duration: "2 months"
 teamSize: 1
 outcomeSummary: "Built a production-grade platform for testing chess engines with real-time WebSocket streaming, concurrent game execution, and battle-tested architecture. Handles hundreds of simultaneous games with sub-20ms latency and zero memory leaks."
-overview: "EngineLab is a modern platform for running UCI chess engine tournaments. It orchestrates thousands of games between chess engines, streams every move in real-time via WebSocket to a web interface, and provides detailed statistics and leaderboards. Built to replace complex GUI tools with a simple, robust, web-based solution."
-problem: "Existing chess engine testing software are excellent but I wanted something more visual. There's no modern solution that combines performance (concurrent game execution), visibility (real-time streaming), and reliability (proper resource management). I wanted a platform I could watch live, like a TV for chess engines."
+overview: "EngineLab is a modern platform for running UCI chess engine tournaments. It orchestrates thousands of games between chess engines, streams every move in real-time via WebSocket to a web interface, and provides detailed statistics and leaderboards. This project replaces my earlier PawnPower system - where PawnPower was pure workload distribution (headless workers running games with no visual feedback), EngineLab focuses on real-time visibility and monitoring."
+problem: "My previous PawnPower project was great for distributed testing workloads, but it was purely backend - workers running games, uploading results, no way to watch what's happening. I wanted something more visual and interactive. There's no modern solution that combines performance (concurrent game execution), visibility (real-time streaming), and reliability (proper resource management). I wanted a platform I could watch live, like a TV for chess engines - see every move as it happens, not just final results."
 constraints:
   - "Must handle hundreds of concurrent engine processes without memory leaks"
   - "Real-time streaming with < 20ms latency to web clients"
@@ -74,10 +74,18 @@ relatedDecisions:
 
 EngineLab is a platform for running chess engine tournaments. It launches chess engines (like Stockfish, Aspira (my own engine), or any UCI-compatible engine), makes them play thousands of games against each other, and streams every move in real-time to a web browser.
 
+**Evolution from PawnPower:**
+
+This project technically replaces my earlier PawnPower system, but they solve different problems:
+
+- **PawnPower** was pure distributed workload - headless workers running games across multiple machines, uploading results to a central database. No visual interface, no real-time feedback, just raw computational power for mass testing.
+
+- **EngineLab** focuses on visibility and monitoring - watch games unfold in real-time, see stats update live, monitor what's happening. It's what I use when I want to *watch* my engines play, not just crunch numbers.
+
 **The problem it solves:**
-- Visual monitoring: Most GUI tools are heavy, require desktop access, and are hard to monitor remotely
-- Fragile scripts: Custom Python scripts often crash, losing progress and visibility
-- No modern solution combines concurrency, real-time streaming, and reliability
+- **Real-time visibility**: Most GUI tools are heavy and desktop-only. I wanted web-based streaming.
+- **Concurrent execution**: Run dozens of games simultaneously without resource leaks
+- **Reliability**: Graceful handling of engine crashes, timeouts, and cleanup
 
 **My goal:** Build something I could watch like a TV - see my chess engines battle in real-time, from anywhere, while the platform handles hundreds of games reliably.
 
