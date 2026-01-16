@@ -6,9 +6,8 @@
  * while providing type-safe access throughout the application.
  * 
  * Setup:
- * 1. Copy .env.example to .env
- * 2. Customize values for your site
- * 3. Import and use siteConfig throughout the application
+ * Environment variables are injected via GitHub Actions workflow during deployment.
+ * For local development, create a .env file with your values.
  * 
  * Configuration Sections:
  * - Site metadata (URL, language, title, description)

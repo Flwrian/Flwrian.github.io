@@ -113,9 +113,9 @@ export const pagesConfig = {
    */
   uses: {
     title: 'Uses - Development Setup & Philosophy',
-    description: 'My development tools, homelab setup, and philosophy on choosing technology - favoring proven solutions over hype.',
+    description: 'My development tools, tech stack, and philosophy on choosing technology - favoring proven solutions over hype.',
     heading: 'Uses',
-    intro: 'I focus on depth over breadth. You\'ll see only Java and Python in my tech stack - not because I don\'t know other languages, but because I believe in true expertise over resume padding. I know C, JavaScript, and others well enough, but mastering two languages beats being mediocre in ten. My setup includes a homelab server for development, standard tooling that works reliably, and a philosophy of choosing technology based on actual needs rather than trends.',
+    intro: 'I focus on depth over breadth. You\'ll see only Java and Python in my tech stack - not because I don\'t know other languages, but because I believe in true expertise over resume padding. I know C, JavaScript, and others well enough, but mastering two languages beats being mediocre in ten. My setup includes a development server with Docker, standard tooling that works reliably, and a philosophy of choosing technology based on actual needs rather than trends.',
   },
   
   /**

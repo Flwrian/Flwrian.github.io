@@ -1,12 +1,12 @@
 ---
-title: "Homelab: My Personal Cloud and Learning Playground"
+title: "Development Server: My Personal Cloud"
 date: 2024-09-10
 type: "milestone"
-description: "Why I replaced my desktop PC with a server and turned it into a homelab for hosting projects, learning infrastructure, and understanding distributed systems."
+description: "Why I replaced my desktop PC with a server for hosting projects, learning infrastructure, and understanding distributed systems with Docker."
 skills:
   - "Infrastructure"
   - "Linux Administration"
-  - "Virtualization"
+  - "Docker"
   - "DevOps"
   - "Networking"
 ---
@@ -41,26 +41,26 @@ SSH from anywhere. On laptop, on another computer, on mobile (if desperate). My 
 
 No more "I forgot that file on my home computer".
 
-### 2. Isolation Through VMs
+### 2. Isolation Through Containers
 
-Different projects in different VMs:
+Different projects in different Docker containers:
 - No dependency conflicts
 - Clean separation of concerns
 - Easy to reset if something breaks
 - Can experiment without fear
 
-Broke something in a VM? Snapshot restore. No harm done.
+Broke something in a container? Recreate it. No harm done.
 
 ### 3. Learning by Doing
 
 Want to understand:
-- Virtualization? Set up KVM/Proxmox
-- Networking? Configure VLANs and routing
-- Storage? RAID arrays and ZFS
-- Containers? Docker and orchestration
+- Containerization? Set up Docker
+- Networking? Configure container networks
+- Storage? Volumes and bind mounts
+- Orchestration? Docker Compose
 - Monitoring? Grafana and metrics collection
 
-**Building a homelab teaches all of this through hands-on experience.**
+**Building a development server teaches all of this through hands-on experience.**
 
 ### 4. Cost Savings
 
@@ -69,7 +69,7 @@ Cloud hosting costs for hobby projects add up:
 - Storage: $5-10/month
 - Bandwidth: Can get expensive
 
-Homelab:
+Development server:
 - One-time hardware cost
 - Electricity (minimal for efficient server)
 - Full control over everything
@@ -92,9 +92,7 @@ No monthly bills. No vendor lock-in. Complete control.
 
 ### Infrastructure
 
-**Virtualization**: KVM or Proxmox for VM management
-
-**Containers**: Docker for application isolation
+**Containers**: Docker for application isolation and reproducibility
 
 **Reverse Proxy**: Nginx for routing traffic
 
@@ -103,23 +101,23 @@ No monthly bills. No vendor lock-in. Complete control.
 ### Services
 
 **Development**:
-- Multiple VMs for different project environments
-- Docker containers for databases and dependencies
+- Docker containers for different project environments
+- Isolated databases and dependencies per project
 - Git server for private repositories
 
 **Hosting**:
 - Web applications (Flask apps, APIs)
 - Databases (PostgreSQL, Redis, InfluxDB)
-- File storage (S3-compatible)
+- File storage
 
 **Monitoring**:
 - Grafana for metrics visualization
 - Custom dashboards for system health
-- Log aggregation
+- Container logs aggregation
 
 **Backup**:
 - Automated nightly backups
-- 3-2-1 backup strategy
+- Volume backups
 - Test restores regularly
 
 ## What I Learned
@@ -134,23 +132,23 @@ No monthly bills. No vendor lock-in. Complete control.
 ### Networking
 
 - TCP/IP fundamentals
-- Routing and switching
-- VLANs and network segmentation
+- Container networking
+- Port mapping and routing
 - Firewall configuration
-- VPN setup for remote access
+- Remote access setup
 
-### Virtualization
+### Containerization
 
-- Hypervisor architecture
-- Resource allocation
-- VM networking
-- Snapshot management
-- Performance tuning
+- Docker architecture
+- Image building and optimization
+- Container networking
+- Volume management
+- Docker Compose orchestration
 
 ### Storage
 
-- RAID configurations
-- File systems (ext4, ZFS, etc.)
+- File systems (ext4, btrfs)
+- Volume management
 - Backup strategies
 - Disaster recovery planning
 
@@ -187,10 +185,11 @@ Home internet isn't datacenter-grade:
 
 ### 3. Initial Time Investment
 
-Setting up a homelab takes time:
+Setting up a development server takes time:
 - Hardware selection
 - OS installation and configuration
-- Service setup
+- Docker setup
+- Service configuration
 - Learning curve
 
 **But**: The time invested pays off in knowledge and capability.
@@ -199,13 +198,13 @@ Setting up a homelab takes time:
 
 **No.**
 
-Don't build a homelab if:
+Don't build a development server if:
 - You just want to write code (use managed services)
 - You don't enjoy infrastructure
 - You need guaranteed uptime
 - You don't have time for maintenance
 
-**Do** build a homelab if:
+**Do** build one if:
 - You're curious about how infrastructure works
 - You enjoy learning by doing
 - You want full control over your environment
@@ -271,22 +270,21 @@ There's confidence that comes from:
 
 ## Current Projects Hosted
 
-- **Aspira development environment**: Dedicated VM with performance monitoring
-- **Web applications**: Flask apps for various projects
-- **Databases**: PostgreSQL, InfluxDB, Redis instances
+- **Aspira development environment**: Docker container with performance monitoring
+- **Web applications**: Flask apps in isolated containers
+- **Databases**: PostgreSQL, InfluxDB, Redis containers
 - **Git repositories**: Private repos for personal projects
-- **CI/CD**: Automated build and test pipelines
-- **File storage**: S3-compatible object storage
+- **File storage**: Volume-backed storage
 - **Monitoring dashboards**: System health and project metrics
 
 ## The Bottom Line
 
-Replacing my desktop with a server homelab wasn't just about hardware:
+Replacing my desktop with a development server wasn't just about hardware:
 
 **It was about learning by doing.**
 
 Every project I host teaches me something:
-- How to deploy properly
+- How to deploy properly with Docker
 - How to monitor effectively
 - How to debug in production
 - How to think operationally
@@ -302,8 +300,8 @@ That understanding makes me a better engineer.
 Start small:
 1. Get modest server hardware
 2. Install Linux
-3. Set up a few VMs
-4. Host a simple project
+3. Set up Docker
+4. Host a simple project in a container
 5. Add monitoring
 6. Iterate and learn
 
@@ -313,8 +311,8 @@ You don't need enterprise hardware. You need curiosity and willingness to learn.
 
 Use managed services. Focus on applications. That's totally valid.
 
-But if you want to understand how systems work end-to-end, building a homelab is one of the best investments you can make.
+But if you want to understand how systems work end-to-end, building a development server is one of the best investments you can make.
 
 ---
 
-*"I'm a good dev and at the same time someone who knows how to build complex systems. I replaced my old PC with a server for a homelab that currently serves me to host projects and acts as my 'Cloud Computing'."*
+*"I replaced my old PC with a server that hosts my projects and acts as my personal cloud. Docker makes everything reproducible and isolated."*
