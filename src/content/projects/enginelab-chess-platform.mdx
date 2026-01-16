@@ -288,13 +288,15 @@ Zero frameworks. 100 lines of JS. 60fps updates.
 
 ## Performance Metrics
 
-**Benchmark Setup:** Ryzen 9 5900X, 100 pairs, Stockfish vs Aspira
+**Benchmark Setup:** Ryzen 9 5900XT (16c/32t), 100 pairs, Stockfish vs Aspira
 
-| Concurrency | Time      | Pairs/min |
-|-------------|-----------|-----------|
-| 1           | 12m 30s   | 8.0       |
-| 4           | 3m 45s    | 26.6      |
-| 8           | 2m 10s    | 46.0      |
+| Uptime Run   | Duration | Concurrent Pairs | Result     |
+|--------------|----------|------------------|------------|
+| Light load   | 6h+      | 1                | 0 crashes  |
+| Medium load  | 6h+      | 4                | 0 crashes  |
+| Stress load  | 6h+      | 8+               | 0 crashes  |
+
+> No CPU's were harmed during testing ;)
 
 **Memory Usage:**
 - Idle: 180MB heap
