@@ -29,9 +29,10 @@ tags:
   - "Performance"
   - "Java"
   - "Trade-offs"
-outcome: "Aspira reaches 20-22M nodes/sec on a Ryzen 5 5500U (30M+ on Ryzen 7 7800X3D). While top C++ engines are faster, the performance is competitive enough to reach 2100+ Elo. More importantly, I learned deep optimization techniques that apply to any language. The decision validated that algorithmic correctness and careful optimization matter more than language choice for many applications."
+outcome: "Aspira reaches 20-22M nodes/sec on a Ryzen 5 5500U (30M+ on Ryzen 7 7800X3D). While top C++ engines are faster, the performance is competitive enough to reach 2200+ Elo. More importantly, I learned deep optimization techniques that apply to any language. The decision validated that algorithmic correctness and careful optimization matter more than language choice for many applications. This philosophy carried into EngineLab (chess tournament platform) - Java handled hundreds of concurrent engine processes, WebSocket streaming, and nano-precision timing without breaking a sweat."
 relatedProjects:
   - "aspira-chess-engine"
+  - "enginelab-chess-platform"
 relatedDecisions:
   - "rewrite-over-refactor"
 ---
@@ -122,10 +123,12 @@ Good algorithms in Java beat bad algorithms in C++. Careful optimization in Java
 
 ## The Results
 
+### Aspira (Chess Engine)
+
 Aspira currently reaches:
 - **20-22M nodes/sec** on Ryzen 5 5500U
 - **30M+ nodes/sec** on Ryzen 7 7800X3D
-- **2100+ Elo** on Lichess
+- **2200+ Elo** on Lichess
 
 For comparison, Stockfish processes ~100M+ nodes/sec on similar hardware. But Stockfish is:
 - Decades of optimization
@@ -133,6 +136,16 @@ For comparison, Stockfish processes ~100M+ nodes/sec on similar hardware. But St
 - Purpose-built C++ from the start
 
 The gap is real but not insurmountable for learning purposes.
+
+### EngineLab (Tournament Platform)
+
+The Java performance thesis proved itself again with EngineLab - a chess tournament platform that manages:
+- **Hundreds of concurrent chess engine processes** with precise lifecycle management
+- **WebSocket streaming** of live game data to multiple concurrent clients
+- **Sub-20ms response latency** for real-time position streaming
+- **Nanosecond-precision timing** for move time control enforcement
+
+Java's concurrency primitives (`ExecutorService`, `CompletableFuture`, structured thread pools) and process management handled this workload elegantly. The platform streams games, coordinates dozens of engines, and maintains WebSocket connections without breaking a sweat - all in Java.
 
 ## What This Taught Me
 
