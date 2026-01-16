@@ -6,7 +6,7 @@ duration: "2 months"
 teamSize: 1
 outcomeSummary: "Built a production-grade platform for testing chess engines with real-time WebSocket streaming, concurrent game execution, and battle-tested architecture. Handles hundreds of simultaneous games with sub-20ms latency and zero memory leaks."
 overview: "EngineLab is a modern platform for running UCI chess engine tournaments. It orchestrates thousands of games between chess engines, streams every move in real-time via WebSocket to a web interface, and provides detailed statistics and leaderboards. Built to replace complex GUI tools with a simple, robust, web-based solution."
-problem: "Existing chess engine testing platforms are either too complex (CuteChess with heavy GUIs) or too basic (fragile Python scripts). There's no modern solution that combines performance (concurrent game execution), visibility (real-time streaming), and reliability (proper resource management). I wanted a platform I could watch live, like a TV for chess engines."
+problem: "Existing chess engine testing software are excellent but I wanted something more visual. There's no modern solution that combines performance (concurrent game execution), visibility (real-time streaming), and reliability (proper resource management). I wanted a platform I could watch live, like a TV for chess engines."
 constraints:
   - "Must handle hundreds of concurrent engine processes without memory leaks"
   - "Real-time streaming with < 20ms latency to web clients"
@@ -72,11 +72,11 @@ relatedDecisions:
 
 ## What is EngineLab?
 
-EngineLab is a platform for running chess engine tournaments. It launches chess engines (like Stockfish, my own Aspira engine, or any UCI-compatible engine), makes them play thousands of games against each other, and streams every move in real-time to a web browser.
+EngineLab is a platform for running chess engine tournaments. It launches chess engines (like Stockfish, Aspira (my own engine), or any UCI-compatible engine), makes them play thousands of games against each other, and streams every move in real-time to a web browser.
 
 **The problem it solves:**
-- CuteChess GUI is powerful but heavy, requires desktop, hard to monitor remotely
-- Python scripts are fragile, crash easily, no visibility into what's happening
+- Visual monitoring: Most GUI tools are heavy, require desktop access, and are hard to monitor remotely
+- Fragile scripts: Custom Python scripts often crash, losing progress and visibility
 - No modern solution combines concurrency, real-time streaming, and reliability
 
 **My goal:** Build something I could watch like a TV - see my chess engines battle in real-time, from anywhere, while the platform handles hundreds of games reliably.
