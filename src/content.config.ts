@@ -102,6 +102,12 @@ const projectsCollection = defineCollection({
     /** Custom sort order (lower numbers first) */
     order: z.number().optional(),
     
+    /** Live demo URL */
+    liveUrl: z.string().url().optional(),
+    
+    /** GitHub repository URL */
+    githubUrl: z.string().url().optional(),
+    
     /** Related project slugs for cross-referencing */
     relatedProjects: z.array(z.string()).optional(),
     

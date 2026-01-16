@@ -50,9 +50,12 @@ interface Props {
   
   /** Project status (default: 'completed') */
   status?: 'completed' | 'ongoing' | 'archived';
+  
+  /** Optional live demo URL */
+  liveUrl?: string;
 }
 
-const { title, slug, outcomeSummary, role, year, techStack = [], featured = false, status = 'completed' } = Astro.props;
+const { title, slug, outcomeSummary, role, year, techStack = [], featured = false, status = 'completed', liveUrl } = Astro.props;
 
 // Show max 4 tech tags to keep card clean and consistent
 const displayTech = techStack.slice(0, 4);
@@ -80,6 +83,15 @@ const statusInfo = statusConfig[status];
     {status !== 'completed' && (
       <span class:list={['status-badge', statusInfo.class]}>
         {statusInfo.label}
+      </span>
+    )}
+    {liveUrl && (
+      <span class="live-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        Live
       </span>
     )}
   </div>
@@ -148,6 +160,24 @@ const statusInfo = statusConfig[status];
   .status--archived {
     background: rgba(115, 115, 115, 0.15);
     color: var(--color-text-muted);
+  }
+
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-accent);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    background: rgba(var(--color-accent-rgb), 0.1);
+  }
+
+  .live-badge svg {
+    flex-shrink: 0;
   }
 
   .tag-more {

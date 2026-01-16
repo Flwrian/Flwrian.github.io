@@ -91,6 +91,8 @@ const {
   relatedProjects,
   relatedDecisions,
   status,
+  liveUrl,
+  githubUrl,
 } = project.data;
 
 // Status display configuration
@@ -172,6 +174,29 @@ const readingTime = formatReadingTime(calculateReadingTime(allText));
       </div>
       <p class="outcome-summary">{outcomeSummary}</p>
     </header>
+
+    <!-- Action Buttons -->
+    {(liveUrl || githubUrl) && (
+      <div class="action-buttons">
+        {liveUrl && (
+          <a href={liveUrl} class="button button--primary" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            Watch Live
+          </a>
+        )}
+        {githubUrl && (
+          <a href={githubUrl} class="button button--secondary" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+            </svg>
+            View Code
+          </a>
+        )}
+      </div>
+    )}
 
     <!-- Overview Section -->
     <section class="case-study-section">
@@ -344,6 +369,52 @@ const readingTime = formatReadingTime(calculateReadingTime(allText));
       font-size: 1.125rem;
       line-height: 1.6;
       color: var(--color-text-secondary);
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 2px solid transparent;
+    }
+
+    .button svg {
+      flex-shrink: 0;
+    }
+
+    .button--primary {
+      background: var(--color-accent);
+      color: var(--color-bg);
+    }
+
+    .button--primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(var(--color-accent-rgb), 0.3);
+    }
+
+    .button--secondary {
+      background: transparent;
+      color: var(--color-text);
+      border-color: var(--color-border);
+    }
+
+    .button--secondary:hover {
+      background: var(--color-surface);
+      border-color: var(--color-accent);
     }
 
     .case-study-section {
