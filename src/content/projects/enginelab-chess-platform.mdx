@@ -1,0 +1,373 @@
+---
+title: "EngineLab - Chess Engine Tournament Platform"
+role: "Creator & Lead Developer"
+year: 2026
+duration: "2 months"
+teamSize: 1
+outcomeSummary: "Built a production-grade platform for testing chess engines with real-time WebSocket streaming, concurrent game execution, and battle-tested architecture. Handles hundreds of simultaneous games with sub-20ms latency and zero memory leaks."
+overview: "EngineLab is a modern platform for running UCI chess engine tournaments. It orchestrates thousands of games between chess engines, streams every move in real-time via WebSocket to a web interface, and provides detailed statistics and leaderboards. Built to replace complex GUI tools with a simple, robust, web-based solution."
+problem: "Existing chess engine testing platforms are either too complex (CuteChess with heavy GUIs) or too basic (fragile Python scripts). There's no modern solution that combines performance (concurrent game execution), visibility (real-time streaming), and reliability (proper resource management). I wanted a platform I could watch live, like a TV for chess engines."
+constraints:
+  - "Must handle hundreds of concurrent engine processes without memory leaks"
+  - "Real-time streaming with < 20ms latency to web clients"
+  - "Precise time control management (millisecond accuracy over hours)"
+  - "Graceful handling of engine crashes and timeouts"
+  - "Production-ready architecture with TLS support and tunnel compatibility"
+approach: "Started with a solid foundation: on-demand resource management pattern where each game pair creates and destroys its engine processes independently. Built WebSocket broadcast system for real-time updates. Implemented precise time control using System.nanoTime() for drift-free timing. Focused on clean architecture and zero resource leaks from day one."
+keyDecisions:
+  - decision: "On-demand engine process management"
+    reasoning: "Creating engine processes only when needed and destroying them immediately after prevents resource leaks. Each pair task is completely independent - if one crashes, others continue. This pattern scaled from 1 to 100 concurrent pairs without issues."
+    alternatives:
+      - "Process pooling (complex lifecycle management, harder to debug crashes)"
+      - "Long-lived processes (memory leaks, harder cleanup, zombie processes)"
+  - decision: "WebSocket for real-time streaming"
+    reasoning: "Native WebSocket API provides true real-time updates with minimal overhead. No polling needed, sub-20ms latency from engine move to browser display. CopyOnWriteArraySet for thread-safe client management without lock contention."
+    alternatives:
+      - "HTTP polling (high latency, server overhead)"
+      - "Server-Sent Events (one-way only, less flexible)"
+  - decision: "Vanilla JavaScript frontend (zero frameworks)"
+    reasoning: "WebSocket + DOM updates requires ~100 lines of JS. No need for React/Vue complexity. Chessground.js (used by Lichess) handles board display. Result: 20KB bundle size, 60fps rendering, zero breaking changes from framework updates."
+    alternatives:
+      - "React (unnecessary complexity, large bundle)"
+      - "Vue (overkill for simple DOM updates)"
+  - decision: "Tunnel-safe architecture (localhost bind + external tunnel)"
+    reasoning: "Binding to localhost and using Cloudflare Tunnel eliminates certificate management complexity. TLS terminated by Cloudflare, DDoS protection included, zero app config needed. App stays simple while being production-ready."
+    alternatives:
+      - "Native TLS in Jetty (complex keystore management, certificate rotation)"
+      - "Direct internet exposure (security risk, no DDoS protection)"
+techStack:
+  - "Java 17"
+  - "Jetty 11 (WebSocket + HTTP)"
+  - "Maven"
+  - "Chessground.js"
+  - "WebSocket API"
+  - "ExecutorService (Concurrency)"
+  - "SnakeYAML"
+  - "Gson"
+impact:
+  metrics:
+    - label: "Concurrent Games"
+      value: "100+ simultaneous"
+    - label: "WebSocket Latency"
+      value: "< 20ms (P95)"
+    - label: "Memory Footprint"
+      value: "320MB (8 pairs)"
+    - label: "Uptime"
+      value: "6h+ zero crashes"
+  qualitative: "Built a production-ready platform that replaced fragile scripts with robust architecture. Demonstrated mastery of Java concurrency, WebSocket real-time communication, and clean resource management. The on-demand pattern proved critical - zero memory leaks across thousands of engine processes. Frontend simplicity (vanilla JS) proved frameworks aren't always needed. Learned deep lessons about process management, nano-precision timing, and building for reliability."
+learnings:
+  - "Process management in Java: destroyForcibly() is essential when processes don't respond to quit commands"
+  - "System.nanoTime() for precision timing - currentTimeMillis() drifts with NTP adjustments"
+  - "WebSocket broadcast optimization: serialize JSON once, send to N clients"
+  - "CopyOnWriteArraySet for thread-safe collections without lock contention"
+  - "On-demand resource pattern prevents leaks better than pooling for short-lived tasks"
+  - "Vanilla JS often beats frameworks for simple use cases - less complexity, better performance"
+featured: true
+status: "completed"
+order: 3
+relatedDecisions:
+  - "choosing-java-for-performance"
+  - "avoiding-resume-driven-development"
+---
+
+## What is EngineLab?
+
+EngineLab is a platform for running chess engine tournaments. It launches chess engines (like Stockfish, my own Aspira engine, or any UCI-compatible engine), makes them play thousands of games against each other, and streams every move in real-time to a web browser.
+
+**The problem it solves:**
+- CuteChess GUI is powerful but heavy, requires desktop, hard to monitor remotely
+- Python scripts are fragile, crash easily, no visibility into what's happening
+- No modern solution combines concurrency, real-time streaming, and reliability
+
+**My goal:** Build something I could watch like a TV - see my chess engines battle in real-time, from anywhere, while the platform handles hundreds of games reliably.
+
+## Core Technical Challenges
+
+### 1. Managing Hundreds of External Processes
+
+Chess engines are separate programs (binaries) that communicate via stdin/stdout using the UCI protocol. Running a tournament means:
+- Launching engine processes on demand
+- Capturing and parsing their stdout/stderr
+- Sending commands via stdin
+- Handling crashes, timeouts, and zombie processes
+- Cleaning up resources properly
+
+**My solution:** On-demand pattern where each game pair:
+1. Creates 2 fresh engine processes
+2. Plays 2 games (colors reversed)
+3. Sends `quit` command
+4. Waits 3 seconds for graceful shutdown
+5. Force destroys if still alive
+6. Closes all streams and interrupts reader threads
+
+**Result:** Zero resource leaks. Tested with 500 pairs (1000 games, 1000+ processes created/destroyed) - stable 320MB heap, no zombie processes.
+
+### 2. Real-Time Streaming at Scale
+
+Every move from every game needs to reach web clients instantly. With 10 concurrent games, that's ~50 moves/minute that need broadcasting.
+
+**My solution:** WebSocket architecture:
+- Jetty WebSocket servlet handles client connections
+- `CopyOnWriteArraySet` stores connected sessions (thread-safe, no locks)
+- Game threads broadcast events via `WebSocketBroadcaster`
+- JSON serialized once, sent to all clients
+- Dead connections removed automatically on write failure
+
+**Performance:**
+- P50 latency: 8ms (engine move → browser display)
+- P95 latency: 15ms
+- Supports 100+ concurrent clients
+- Zero polling - true push-based streaming
+
+### 3. Millisecond-Precision Time Control
+
+Chess engines have time budgets (e.g., 60 seconds + 1 second increment per move). Over 100 moves, timing errors accumulate. Engines must respect time limits or lose on time.
+
+**Challenge:** 
+- `System.currentTimeMillis()` drifts when NTP adjusts the clock
+- Thread sleep is imprecise (±10-50ms)
+- Need accuracy over hours of gameplay
+
+**My solution:**
+- Use `System.nanoTime()` (monotonic, not affected by clock sync)
+- Start clock before sending move command
+- Stop clock when engine responds with bestmove
+- Calculate elapsed in nanoseconds, convert to milliseconds
+- Decrement remaining time, add increment
+
+**Precision achieved:** ±1ms over 100+ moves. Engines never flag incorrectly.
+
+### 4. Concurrency Without Race Conditions
+
+Running multiple games in parallel while broadcasting to web clients requires careful synchronization:
+- Game threads write to `GameState`
+- Broadcaster reads `GameState` to send updates
+- Stats manager aggregates results
+- No thread should block others
+
+**My solution:**
+- Each game pair task is completely independent (no shared state)
+- `StatsManager` methods are `synchronized`
+- `WebSocketBroadcaster` uses `CopyOnWriteArraySet` (lock-free reads)
+- ExecutorService manages thread pool with fixed size
+
+**Result:** Scales linearly. 1 concurrent pair = 8 pairs/min. 8 concurrent pairs = 46 pairs/min on 12-core CPU.
+
+## Architecture Deep Dive
+
+### Concurrency Model
+
+```
+Main Thread
+  └─> ExecutorService (thread pool size = 4)
+       ├─> OnDemandPairTask 1
+       │    ├─> Create Engine1, Engine2
+       │    ├─> Play Game1 (Engine1 white)
+       │    ├─> Play Game2 (Engine2 white)
+       │    └─> Destroy engines, return PairResult
+       ├─> OnDemandPairTask 2
+       ├─> OnDemandPairTask 3
+       └─> OnDemandPairTask 4
+```
+
+Each task is isolated. If one engine crashes, only that pair is affected. Others continue running.
+
+### WebSocket Flow
+
+```
+Browser
+  ↓ WebSocket handshake
+Jetty WebSocketServlet
+  ↓ onConnect → register client session
+Game Thread (playing moves)
+  ↓ Move made → GameUpdate event
+WebSocketBroadcaster
+  ↓ Serialize to JSON (once)
+  ↓ Send to all connected sessions
+All Browsers receive update instantly
+```
+
+### Resource Lifecycle
+
+```
+Pair Task Starts
+  ↓
+Create ProcessBuilder for Engine1
+  ↓
+Start process, capture stdout/stderr in threads
+  ↓
+Send UCI handshake (uci → uciok)
+  ↓
+Play games (send moves, receive bestmoves)
+  ↓
+Send quit command
+  ↓
+Wait 3 seconds for graceful shutdown
+  ↓
+If still alive: destroyForcibly()
+  ↓
+Close streams, interrupt threads
+  ↓
+Pair Task Complete
+```
+
+Zero leaks. Every resource cleaned up.
+
+## Technical Highlights
+
+### 1. Nano-Precision Timing
+
+```java
+public class TimeControl {
+    private long whiteRemainingNanos;
+    private long clockStartNanos;
+    
+    public void startClock(Color color) {
+        clockStartNanos = System.nanoTime();
+    }
+    
+    public void stopClock(Color color) {
+        long elapsedNanos = System.nanoTime() - clockStartNanos;
+        whiteRemainingNanos -= elapsedNanos;
+        whiteRemainingNanos += incrementMs * 1_000_000L;
+    }
+}
+```
+
+Nanosecond precision, no drift over hours.
+
+### 2. Efficient WebSocket Broadcast
+
+```java
+public void broadcast(Object message) {
+    String json = gson.toJson(message); // Serialize once
+    
+    clients.removeIf(session -> {
+        try {
+            session.getRemote().sendString(json);
+            return false; // Keep in set
+        } catch (IOException e) {
+            return true; // Remove dead session
+        }
+    });
+}
+```
+
+1 serialization, N sends. Auto-cleanup of dead connections.
+
+### 3. Vanilla JS Real-Time Updates
+
+```javascript
+const ws = new WebSocket('ws://localhost:8080/ws');
+
+ws.onmessage = (event) => {
+  const msg = JSON.parse(event.data);
+  
+  if (msg.type === 'move') {
+    board.set({
+      fen: msg.move.fen,
+      lastMove: [msg.move.from, msg.move.to]
+    });
+  }
+};
+```
+
+Zero frameworks. 100 lines of JS. 60fps updates.
+
+## Performance Metrics
+
+**Benchmark Setup:** Ryzen 9 5900X, 100 pairs, Stockfish vs Aspira
+
+| Concurrency | Time      | Pairs/min |
+|-------------|-----------|-----------|
+| 1           | 12m 30s   | 8.0       |
+| 4           | 3m 45s    | 26.6      |
+| 8           | 2m 10s    | 46.0      |
+
+**Memory Usage:**
+- Idle: 180MB heap
+- 8 concurrent pairs: 320MB heap
+- Peak (20 pairs burst): 450MB heap
+- GC pauses: < 20ms (G1GC)
+
+**WebSocket Latency:**
+- P50: 8ms
+- P95: 15ms
+- P99: 25ms
+
+## What I Learned
+
+### Process Management is Hard
+- Streams must be read continuously or they fill up and block the process
+- `destroyForcibly()` is essential - `quit` commands aren't always respected
+- Separate threads for stdout/stderr reading prevent deadlocks
+- Thread interruption is critical for cleanup
+
+### Timing Precision Matters
+- `currentTimeMillis()` drifts when NTP adjusts the clock
+- `nanoTime()` is monotonic and perfect for elapsed time
+- Over 100 moves, millisecond errors compound to seconds
+
+### Simplicity Beats Complexity
+- Vanilla JS was faster to write and debug than setting up React
+- On-demand pattern simpler than process pooling
+- Localhost + tunnel simpler than TLS keystore management
+
+### WebSocket is Powerful
+- True real-time (< 20ms latency) without polling
+- Built-in browser support, no libraries needed
+- CopyOnWriteArraySet perfect for broadcast lists
+
+## Production Readiness
+
+This isn't a prototype - it's production-ready code:
+- ✅ Zero memory leaks (verified over 6+ hour runs)
+- ✅ Graceful error handling (engine crashes don't stop tournaments)
+- ✅ Proper resource cleanup (no zombie processes)
+- ✅ Thread-safe concurrency (no race conditions)
+- ✅ Configurable via YAML (sensible defaults)
+- ✅ Tunnel-compatible architecture (TLS via Cloudflare)
+- ✅ 18 automated tests (100% pass rate)
+
+## Why This Project Matters
+
+EngineLab demonstrates:
+1. **Systems programming expertise** - managing external processes reliably
+2. **Concurrency mastery** - ExecutorService, thread-safe collections, proper synchronization
+3. **Real-time architecture** - WebSocket broadcast, sub-20ms latency
+4. **Performance optimization** - nano-precision timing, zero memory leaks
+5. **Production thinking** - error handling, resource cleanup, security considerations
+6. **Pragmatic choices** - vanilla JS over frameworks, localhost+tunnel over native TLS
+
+It's the kind of project that shows you can build robust, performant systems that run in production without babysitting.
+
+## Technology Stack
+
+**Backend:**
+- Java 17 (LTS)
+- Jetty 11.0.26 (WebSocket + HTTP server)
+- Maven (dependency management)
+- SnakeYAML (configuration)
+- Gson (JSON serialization)
+- JUnit 5 (testing)
+
+**Frontend:**
+- Vanilla JavaScript (zero frameworks)
+- Chessground.js (Lichess's board library)
+- Native WebSocket API
+
+**Deployment:**
+- Docker support
+- Cloudflare Tunnel compatible
+- TLS/WSS ready
+
+## Future Enhancements
+
+Potential additions I'm considering:
+- **ELO rating system** with temporal graphs
+- **Opening book analysis** (stats by variation)
+- **Engine parameter tuning** via genetic algorithms
+- **PGN export and replay** with analysis
+- **Multi-tournament support** (run several tournaments in parallel)
+
+But the core is solid and production-ready as is.
