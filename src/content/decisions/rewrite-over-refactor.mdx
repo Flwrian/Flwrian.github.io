@@ -1,8 +1,8 @@
 ---
 title: "Rewrite Over Refactor: When to Start From Scratch"
 date: 2024-03-10
-context: "Aspira v1 'worked' - it played legal chess moves and beat random players. But it had fundamental architectural issues: move generation was inefficient, board representation caused unnecessary allocations, and the search algorithm had subtle bugs. Should I refactor incrementally or rewrite from scratch?"
-decision: "Complete rewrite of Aspira, throwing away months of work to build on a better foundation."
+context: "Aspira v1 'worked' - it played legal chess moves (no castling and en passant though) and beat random players. But it had fundamental architectural issues: move generation was inefficient, board representation caused unnecessary allocations, and the search algorithm had subtle bugs. Should I refactor incrementally or rewrite from scratch?"
+decision: "Complete rewrite of Aspira, throwing away hard work to build on a better foundation."
 alternatives:
   - option: "Incremental Refactoring"
     pros:
@@ -24,12 +24,12 @@ alternatives:
       - "Boundaries between old and new code create friction"
       - "Old assumptions leak into new code"
       - "Still carrying forward fundamental design issues"
-reasoning: "The core architecture had fundamental issues that couldn't be patched. Move generation, board representation, and search were all interconnected - fixing one exposed issues in others. Refactoring would be fighting the architecture continuously. A rewrite with lessons learned would be faster and result in cleaner, more maintainable code. The goal isn't just 'working' code - it's correct, fast, understandable code. Better to invest in solid foundation now than patch forever."
+reasoning: "The core architecture had fundamental issues that couldn't be patched. Move generation, board representation, and search were all interconnected. Fixing one exposed issues in others. Refactoring would be fighting the architecture continuously. A rewrite with lessons learned would be faster and result in cleaner, more maintainable code. The goal isn't just 'working' code, it's correct, fast, understandable code. Better to invest in solid foundation now than patch forever."
 tags:
   - "Architecture"
   - "Technical Debt"
   - "Software Design"
-outcome: "The rewrite took significant time but resulted in dramatically better code. v2 is faster (20M+ nodes/sec vs ~8M), more correct (passes extensive perft suites), and more maintainable (easier to add features). Performance gains came from simpler, cleaner code rather than clever tricks. The solid foundation makes future improvements straightforward instead of fighting the architecture."
+outcome: "The rewrite took significant time but resulted in dramatically better code. v2 is faster (10M nodes/sec vs ~1M), more correct (passes extensive perft suites), and more maintainable (easier to add features). Performance gains came from simpler, cleaner code rather than clever tricks. The solid foundation makes future improvements straightforward instead of fighting the architecture."
 relatedProjects:
   - "aspira-chess-engine"
 relatedDecisions:
@@ -38,19 +38,19 @@ relatedDecisions:
 
 ## The Painful Realization
 
-Aspira v1 worked. I could play it against other engines. It made legal moves, evaluated positions, managed time control.
+Aspira v1 worked. I could play it against other engines. It made legal moves, evaluated positions.
 
 But deep down, I knew the architecture was wrong.
 
 ### The Problems
 
-**Move Generation**: Generated pseudo-legal moves then filtered for legality. Inefficient and error-prone.
+**Move Generation**: Bad design. Very inefficient. Bad allocations. Could be way better.
 
-**Board Representation**: Mixed bitboards and piece lists inconsistently. Caused unnecessary allocations and synchronization bugs.
+**Board Representation**: Array of ints (can be efficient but mine was messy). Lead to poor performance and bugs.
 
-**Make/Unmake**: Subtle bugs in position restoration after trying moves. Would corrupt state several plies deep.
+**Make/Unmake**: Again, bad allocation patterns. Subtle bugs in restoring position state.
 
-**Search**: Alpha-beta implementation had edge cases where it didn't prune correctly. Hard to extend.
+**Search**: Alpha-beta implementation wasen't that bad, but coupled with the above issues led to poor performance and correctness problems.
 
 **No Abstractions**: Everything was tangled. Couldn't change one thing without breaking three others.
 
@@ -62,13 +62,13 @@ Every fix revealed deeper issues:
 - Fix move generation → expose bugs in board representation
 - Fix board representation → break make/unmake
 - Fix make/unmake → expose search bugs
-- Fix search → back to move generation issues
+- Fix search → more confusion on what was actually broken
 
-It was like pulling on a thread and watching the whole sweater unravel.
+It was like pulling on a thread and watching the whole sweater unravel. It wasn't pleasing anymore to work on it.
 
 ## The Decision Moment
 
-After three weeks of fighting the architecture, I asked myself:
+After some weeks of fighting the architecture, I asked myself:
 
 **"How long would it take to rewrite this from scratch with everything I've learned?"**
 
@@ -78,7 +78,7 @@ That's when I made the decision: **complete rewrite**.
 
 ## What Made This Hard
 
-Throwing away months of work hurts. You have functioning code. It does things. People can use it.
+Throwing away weeks of work hurts. You have functioning code. It does things. People can use it.
 
 Starting over feels like failure.
 
@@ -101,7 +101,7 @@ Built solid foundation:
 ### Phase 2: Move Generation (2 weeks)
 
 Implemented from scratch with correctness as primary goal:
-- Magic bitboards for sliding pieces
+- Keeping it simple (naive move generation first)
 - Proper castling, en passant, promotion
 - Perft testing at every step
 - Only optimized after correctness proven
@@ -117,6 +117,7 @@ Clean alpha-beta implementation:
 ### Phase 4: Optimization (ongoing)
 
 With solid foundation, optimization became straightforward:
+- Magic bitboards for sliding pieces
 - Profile to find hot paths
 - Optimize specific bottlenecks
 - Measure improvements
@@ -136,7 +137,7 @@ I knew what problems to avoid:
 
 v1 prioritized "getting it working" which led to shortcuts and technical debt.
 
-v2 prioritized correctness, which paradoxically led to better performance (fewer bugs, simpler code that JIT can optimize).
+v2 prioritized correctness and good code, which led to better performance (fewer bugs, simpler code that JIT can optimize).
 
 ### 3. Better Design Upfront
 
@@ -158,8 +159,8 @@ After each phase, extensive testing before moving forward:
 
 ### Performance
 
-- **v1**: ~8M nodes/sec with bugs
-- **v2**: 20-22M nodes/sec, correct
+- **v1**: ~1M nodes/sec with bugs
+- **v2**: ~10M nodes/sec at first stable release
 
 The speed came from simpler code, not clever tricks.
 
@@ -249,4 +250,4 @@ If no, refactor.
 
 ---
 
-*"The current version is not 'v1 with patches' — it's a full rewrite with everything I learned the hard way baked in."*
+*"The current version is not 'v1 with patches', it's a full rewrite with everything I learned the hard way baked in."*
