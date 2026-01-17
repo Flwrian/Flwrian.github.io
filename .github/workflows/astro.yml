@@ -74,7 +74,7 @@ jobs:
           SITE_AUTHOR_NAME=Florian
           SITE_AUTHOR_TITLE=Software Engineer & System Architect
           SITE_AUTHOR_BIO=Curious software engineer who values clarity and quality. I build scalable systems, make thoughtful architectural decisions, and love exploring how things work under the hood.
-          SITE_AUTHOR_EMAIL=floflomontage@gmail.com
+          SITE_AUTHOR_EMAIL=florian@flwrian.com
           SITE_AUTHOR_LOCATION=Montpellier, France
           SOCIAL_GITHUB=https://github.com/flwrian
           SOCIAL_LINKEDIN=https://fr.linkedin.com/in/florian-montourcy
