@@ -84,6 +84,7 @@ jobs:
           SITE_TITLE=Florian - Software Engineer
           SITE_DESCRIPTION=Software engineer specializing in Java, system architecture, and building performant solutions. I explore technology through hands-on projects and value clean code over hype.
           EOF
+          echo "BUILD_DATE=$(date -u +'%Y-%m-%d %H:%M UTC')" >> .env
         working-directory: ${{ env.BUILD_PATH }}
       - name: Build with Astro
         run: |
