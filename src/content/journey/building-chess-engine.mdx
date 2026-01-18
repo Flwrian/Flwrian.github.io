@@ -3,85 +3,17 @@ title: "Building a Chess Engine: When Everything Depends on Everything"
 date: 2024-06-15
 type: "learning"
 description: "Starting Aspira seemed simple: make a program that plays chess. It became the most mentally demanding project I've tackled, teaching me that complex systems require correctness everywhere."
-skills:
-  - "Chess Programming"
-  - "Performance Optimization"
-  - "System Design"
-  - "Debugging"
+skills: ["Chess Programming", "Performance Optimization", "System Design", "Debugging"]
 ---
 
-## The Naive Beginning
+## Aspira: The Project That Changed How I See Code
 
-"I'll build a chess engine" sounds reasonable. Chess has well-defined rules. Move generation is just following those rules. Evaluation is just counting material. Search is just trying moves and picking the best one.
+Aspira didn’t just teach me about chess engines it taught me about myself as a developer. When I started, I thought it would be a fun side project. Write some code, make a bot play chess, maybe learn a few tricks. I had no idea what I was getting into.
 
-Except none of that is true at scale.
+The first time Aspira played a legal game, I was like a kid. But very quickly, reality caught up with me: perft tests exploding, impossible-to-isolate bugs, architecture collapsing as soon as I tried to push further. I spent nights tracking down errors that weren’t typos, but mistakes in logic, understanding, and design. I realized that in a chess engine, everything is connected, and the slightest approximation can cost you dearly.
 
-## When Things Started Breaking
+I threw everything away. Started from scratch. Not out of perfectionism, but because it was the only way to move forward. This time, I put correctness above all. Bitboards, magic bitboards, clean make/unmake functions, tests at every step. And only when everything was solid did I start chasing performance. The result? 20 million nodes per second, but more importantly, an engine where I understand every line, every choice.
 
-The first version "worked". It played legal moves. It could beat random move players. It looked correct.
+But the most important lesson was about myself: patience, humility, the ability to doubt, to start over, to seek not the "clever" solution but the right one. Aspira is the project that taught me that true satisfaction doesn’t come from raw performance, but from deep understanding and the journey taken to get there.
 
-Then I ran perft tests (move generation verification) and everything fell apart.
-
-Positions that should have 20 moves had 19. Or 21. Castling rights weren't updating properly. En passant capture corrupted the board state three moves later. A single bit flip in a bitboard operation cascaded into completely wrong evaluations.
-
-**The lesson**: In a chess engine, everything depends on everything else. There's no isolated bug fix. One small mistake anywhere, and the entire system becomes unreliable.
-
-## The Rewrite
-
-I threw away the first version. Not because it was "messy" - because the architecture was fundamentally unsound. Shortcuts I took early to "get it working" became impossible to fix later.
-
-The second version started with correctness: proper bitboard operations, clean make/unmake, verified move generation at every step.
-
-Only after correctness was bulletproof did I optimize for performance.
-
-## What This Taught Me
-
-**1. Complexity Compounds**
-
-In simple programs, bugs are local. Fix one function, move on.
-
-In chess engines, bugs are systemic. A wrong move generation affects search, which affects evaluation, which affects time management. You can't debug by guessing - you must understand the entire system.
-
-**2. Performance Comes from Correctness**
-
-Most of my performance gains didn't come from clever tricks. They came from fixing bugs that caused unnecessary work or simplifying convoluted logic.
-
-The "clever" optimizations often made things slower because they added complexity that the JIT couldn't optimize away.
-
-**3. You Can't Hide**
-
-In web development, you can sometimes patch over a bad abstraction. In a chess engine, bad abstractions kill performance and correctness.
-
-This forced me to write good code everywhere. Not "good enough" - actually good.
-
-**4. Understanding Beats Guessing**
-
-I spent nights debugging perft failures. Staring at hexadecimal bitboards. Tracing execution through thousands of nodes.
-
-The bugs weren't syntax errors. They were conceptual errors - misunderstanding how a piece moves, or how castling rights update, or when en passant is legal.
-
-Each bug fixed deepened my understanding of chess rules and computer architecture.
-
-## The Current State
-
-Aspira now reaches 20+ million nodes per second. Not because of one magic optimization, but because of hundreds of small fixes to correctness and simplicity.
-
-It's not the fastest engine (C++ engines still dominate). But it's *my* engine, built from understanding every single piece.
-
-## Why This Matters
-
-Aspira taught me how to build complex systems:
-
-- Start with correctness, optimize later
-- Understand deeply, don't just copy
-- Design for simplicity, not cleverness
-- Test rigorously at every level
-- Accept that some things require starting over
-
-These lessons apply far beyond chess engines. They're how I approach every complex system now.
-
-## The Name
-
-Aspira comes from "aspiring" - aspiring to build something strong, aspiring to understand something deeply.
-
-Somewhere along the way, it also started aspiring my soul. But that's what makes it worth it.
+The name "Aspira" comes from "aspiring": to understand, to build, to go further. And somewhere along the way, this project ended up aspiring me too. And that’s what makes it precious.
